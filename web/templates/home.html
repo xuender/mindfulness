@@ -1,13 +1,10 @@
-<html>
-  <head>
-    <title>首页</title>
-  </head>
-  <body>
-    <h1>图书</h1>
-    <ol>
-    {% for book in books %}
-    <li><a href="/book/{{ book.id }}">{{ book.title }}</a></li>
-    {% endfor %}
-    </ol>
-  </body>
-</html>
+{% extends "base.html" %}
+{% block title %}首页{% endblock %}
+{% block content %}
+<h1>书籍</h1>
+<ol>
+{% for book in books %}
+  <li><a href="/book/{{ book.id }}">{{ book.title }}</a></li>
+{% endfor %}
+</ol>
+{% endblock %}

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>{% block title %}{% endblock %} - 正念阅读</title>
+  </head>
+  <body>
+    {% if user.is_authenticated %}
+      欢迎 {{ user.username }}
+    <a href="{% url "logout" %}">登出</a>
+    {% else %}
+    <a href="{% url "login" %}">登录</a>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </body>
+</html>
+

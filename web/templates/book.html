@@ -1,15 +1,12 @@
-<html>
-<head>
-<title>图书</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}书籍{% endblock %}
+{% block content %}
 <h1>{{ book.title }}</h1>
 <h2>章节</h2>
 <ol>
 {% for chapter in book.chapters.all %}
-<li><a href="/chapter/{{ chapter.id }}">{{ chapter.title }}</a></li>
+  <li><a href="/chapter/{{ chapter.id }}">{{ chapter.title }}</a></li>
 {% endfor %}
 {{ book.stars.count }}星标
 </ol>
-</body>
-</html>
+{% endblock %}

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for web project.
 
@@ -81,10 +82,6 @@ DATABASES = {
 LANGUAGE_CODE = 'zh-cn'
 
 TIME_ZONE = 'Asia/Shanghai'
-DATETIME_FORMAT = 'Y-m-d H:i:s'
-DATE_FORMAT = 'Y-m-d'
-SHORT_DATE_FORMAT = 'Y-m-d'
-TIME_FORMAT = 'H:i:s'
 
 USE_I18N = True
 
@@ -97,3 +94,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# 新增
+# 登录成功跳转页面
+LOGIN_REDIRECT_URL = '/'
+DATETIME_FORMAT = 'Y-m-d H:i:s'
+DATE_FORMAT = 'Y-m-d'
+SHORT_DATE_FORMAT = 'Y-m-d'
+TIME_FORMAT = 'H:i:s'
