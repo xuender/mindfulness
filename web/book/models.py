@@ -14,6 +14,10 @@ class Book(UpdateModel):
     def __unicode__(self):
         return self.title
 
+    @staticmethod
+    def top(num=10):
+        return Book.objects.all()[:num]
+
     class Meta:
         verbose_name = '图书'
         verbose_name_plural = '图书'
@@ -92,15 +96,17 @@ class Annotation(UpdateModel):
     context=models.TextField(
             verbose_name='正文',
             )
+    def _select(self):
+        row = self.chapter.context.split('\n')[self.row - 1]
+        regex = re.compile("(?x) (?: [\w-]+ | [\x80-\xff]{3} )")
+        ret = regex.findall(row.encode('utf-8'))
+        for i in ['，', '。']:
+            while i in ret:
+                ret.remove(i)
+        return ret
     def select(self):
         '显示批注的目标内容'
-        row = self.chapter.context.split('\n')[self.row - 1]
-        regex=re.compile("(?x) (?: [\w-]+  | [\x80-\xff]{3} )")
-        ls = regex.findall(row)
-        ret = ''
-        for i in ls[self.start - 1:self.end]:
-            ret += i
-        return ret
+        return ''.join(self._select()[self.start - 1 : self.end])
 
     def __unicode__(self):
         return u'%s:%s:%d'%(self.chapter, self.create_by, self.id)

@@ -1,0 +1,17 @@
+<html>
+<head>
+<title>章节</title>
+</head>
+<body>
+<h1><a href="/book/{{ chapter.book.id }}">{{ chapter.book.title }}</a></h1>
+<h2>{{ chapter.title }}</h2>
+{{ chapter.context }}
+
+<h3>批注</h3>
+<ol>
+{% for a in chapter.anotations.all %}
+<li>{{ a.context }}</li>
+{% endfor %}
+</ol>
+</body>
+</html>

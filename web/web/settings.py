@@ -26,6 +26,9 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TEMPLATE_DIRS = (
+    BASE_DIR + '/templates/',
+        )
 
 # Application definition
 
@@ -66,7 +69,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'book',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD': 'xcy123',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
