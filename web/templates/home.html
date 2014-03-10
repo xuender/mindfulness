@@ -3,8 +3,14 @@
 {% block content %}
 <h1>书籍</h1>
 <ol>
-{% for book in books %}
-  <li><a href="/book/{{ book.id }}">{{ book.title }}</a></li>
-{% endfor %}
+  {% for book in books %}
+  <li>
+    <a href="/book/{{ book.id }}">{{ book.title }}</a>
+    <span>
+      {{ book.stars.count }}
+      <span class="glyphicon glyphicon-star"></span>
+    </span>
+  </li>
+  {% endfor %}
 </ol>
 {% endblock %}

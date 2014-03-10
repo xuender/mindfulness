@@ -19,8 +19,9 @@ def book(request, id):
 
 def chapter(request, id):
     t = get_template('chapter.html')
+    c = Chapter.objects.get(id=id)
     html = t.render(RequestContext(request,
-        {'chapter': Chapter.objects.get(id=id)}))
+        {'chapter': c, 'book': c.book}))
     return HttpResponse(html)
 
 def logout_view(request):

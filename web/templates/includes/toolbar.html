@@ -1,0 +1,26 @@
+<div class="btn-toolbar pull-right" role="toolbar">
+  <div class="btn-group">
+    <button class="btn btn-default">
+      <i class="glyphicon glyphicon-star"></i>
+      关注
+    </button>
+    <button class="btn btn-success count">
+      {{ book.stars.count }}
+    </button>
+  </div><!-- btn-group -->
+  <div class="btn-group">
+    <button class="btn btn-default">
+      <i class="glyphicon glyphicon-pencil"></i>
+      批注
+    </button>
+    <button class="btn btn-success count">
+      {{ book.stars.count }}
+    </button>
+  </div><!-- btn-group -->
+</div><!-- btn-toolbar -->
+<h1>
+  <i class="glyphicon glyphicon-book"></i>
+  <a href="/book/{{ book.id }}">
+    {{ book.title }}
+  </a>
+</h1>

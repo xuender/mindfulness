@@ -102,3 +102,6 @@ DATETIME_FORMAT = 'Y-m-d H:i:s'
 DATE_FORMAT = 'Y-m-d'
 SHORT_DATE_FORMAT = 'Y-m-d'
 TIME_FORMAT = 'H:i:s'
+STATICFILES_DIRS = (
+    BASE_DIR + '/static/',
+        )

@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 {% block title %}书籍{% endblock %}
 {% block content %}
-<h1>{{ book.title }}</h1>
-<h2>章节</h2>
+{% include 'includes/toolbar.html' %}
 <ol>
-{% for chapter in book.chapters.all %}
+  {% for chapter in book.chapters.all %}
   <li><a href="/chapter/{{ chapter.id }}">{{ chapter.title }}</a></li>
-{% endfor %}
-{{ book.stars.count }}星标
+  {% endfor %}
 </ol>
 {% endblock %}
