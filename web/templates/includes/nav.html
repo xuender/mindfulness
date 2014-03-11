@@ -9,14 +9,14 @@
           <a href="/about">关于</a>
         </li>
       </ul>
-      <p class="navbar-text navbar-right">
+      <span class="navbar-text navbar-right">
         {% if user.is_authenticated %}
         欢迎 {{ user.username }}
         <a class="navbar-link" href="{% url "logout" %}">登出</a>
         {% else %}
         <a class="navbar-link" href="{% url "login" %}">登录</a>
         {% endif %}
-      </p>
+      </span>
     </nav>
   </div><!-- container -->
 </header>

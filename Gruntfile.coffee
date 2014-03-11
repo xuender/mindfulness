@@ -22,6 +22,16 @@ module.exports = (grunt)->
         part: 'patch'
       files: ['package.json', 'bower.json']
     copy:
+      #d3:
+      #  files: [
+      #    cwd: 'bower_components/d3/'
+      #    src: [
+      #      'd3.min.js'
+      #    ]
+      #    dest: 'web/static/js'
+      #    expand: true
+      #    filter: 'isFile'
+      #  ]
       angular:
         files: [
           cwd: 'bower_components/angular/'
@@ -69,24 +79,10 @@ module.exports = (grunt)->
     coffee:
       options:
         bare: true
-      main:
+      chapter:
         files:
-          'dist/js/main.min.js': [
-            'src/js/toolbox.coffee'
-            'src/js/command.coffee'
-            'src/js/sort.coffee'
-            'src/js/trim.coffee'
-            'src/js/unique.coffee'
-            'src/js/hash.coffee'
-            'src/js/sql.coffee'
-            'src/js/beautify.coffee'
-            'src/js/about.coffee'
-            'src/js/index.coffee'
-          ]
-      background:
-        files:
-          'dist/js/background.js': [
-            'src/js/background.coffee'
+          'web/static/js/chapter.min.js': [
+            'src/js/chapter.coffee'
           ]
     uglify:
       main:

@@ -1,43 +1,99 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block title %}章节{% endblock %}
+{% block js %}
+<script src="{% static "js/chapter.min.js" %}"></script>
+{% endblock %}
 {% block content %}
 {% include 'includes/toolbar.html' %}
-<div class="col-xs-10">
+<div class="col-xs-8">
   <h2>{{ chapter.title }}</h2>
   <div class="jumbotron">
+    {% comment %}
     {{ chapter.context }}
+    {% endcomment %}
+    <p>弟子<span id="s1">规</span>，<span id="s2">圣</span><span id="s3">人</span>训。</p>
+    <p>首<span id="s4">孝</span><span id="s5">悌</span>，次谨信。</p>
+    <p>有余力，则学文。</p>
+    <p><span id="s8">阿</span>弥陀佛（梵语Amitābha），又名无量佛、无量光佛、无量寿佛等。大乘经载，阿弥陀佛在过去久远劫时曾立大愿，建立西方净土，广度无边众生，成就无量庄严功德，为大乘佛教所广为崇敬和弘扬。大乘佛经主要如《无量寿经》、《阿弥陀经》、《观无量寿佛经》，对阿弥陀佛及其西方极乐世界均有详述。大乘佛教流传之地，如中国、日本等大乘教区，阿弥陀佛信仰也尤为繁盛和重要。而汉传佛教的净土宗，则完全以往生阿弥陀佛的西方净土作为专修的法<span 
+        id="s9">门</span>。</p>
+    <p>阿弥陀佛（梵语Amitābha），又名无量佛、无量光佛、无量寿佛等。大乘经载，阿弥陀佛在过去久远劫时曾立大愿，建立西方净土，广度无边众生，成就无量庄严功德，为大乘佛教所广为崇敬和弘扬。大乘佛经主要如《无量寿经》、《阿弥陀经》、《观无量寿佛经》，对阿弥陀佛及其西方极乐世界均有详述。大乘佛教流传之地，如中国、日本等大乘教区，阿弥陀佛信仰也尤为繁盛和重要。而汉传佛教的净土宗，则完全以往生阿弥陀佛的西方净土作为专修的法门。</p>
+    <p>阿弥陀佛（梵语Amitābha），又名无量佛、无量光佛、无量寿佛等。大乘经载，阿弥陀佛在过去久远劫时曾立大愿，建立西方净土，广度无边众生，成就无量庄严功德，为大乘佛教所广为崇敬和弘扬。大乘佛经主要如《无量寿经》、《阿弥陀经》、《观无量寿佛经》，对阿弥陀佛及其西方极乐世界均有详述。大乘佛教流传之地，如中国、日本等大乘教区，阿弥陀佛信仰也尤为繁盛和重要。而汉传佛教的净土宗，则完全以往生阿弥陀佛的西方净土作为专修的法门。</p>
   </div>
-</div><!-- 10 -->
-<div class="col-xs-2">
-  <div class="affix">
-    <h3>批注</h3>
-    <h4>推荐</h4>
-    <ul class="nav nav-pills nav-stacked">
-      <li class="active">
-        <span class="badge pull-right">4</span>
-        <label>
-          <input type="checkbox"></input>
-          钟茂森
-        </label>
-      </li>
-      <li>
-        <span class="badge pull-right">5</span>
-        <label>
-          <input type="checkbox"></input>
-          徐晨阳
-        </label>
-      </li>
-    </ul>
-    <h4>好友</h4>
-    <ul>
-      <li>钟茂森</li>
-      <li>钟茂森</li>
-    </ul>
-    <ol>
-      {% for a in chapter.anotations.all %}
-      <li>{{ a.context }}</li>
-      {% endfor %}
-    </ol>
-  </div><!-- affix -->
-</div><!-- 2 -->
+</div><!-- 8 -->
+<div class="panel-group col-xs-4" id="right">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#right" href="#c1">
+          推荐
+        </a>
+      </h4>
+    </div><!-- panel-title -->
+    <div id="c1" class="panel-collapse collapse in">
+      <div class="panel-body">
+        <ul class="nav nav-pills nav-stacked">
+          <li class="active">
+            <span class="badge pull-right">4</span>
+            <label>
+              <input type="checkbox"></input>
+              钟茂森
+            </label>
+          </li>
+          <li>
+            <span class="badge pull-right">5</span>
+            <label>
+              <input type="checkbox"></input>
+              徐晨阳
+            </label>
+          </li>
+        </ul>
+      </div><!-- panel-body -->
+    </div><!-- collapseOne -->
+  </div><!-- panel -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#right" href="#c2">
+          <i class="glyphicon glyphicon-star"></i>
+          关注
+        </a>
+      </h4>
+    </div><!-- panel-title -->
+    <div id="c2" class="panel-collapse collapse">
+      <div class="panel-body">
+        <ul>
+          <li>钟茂森</li>
+          <li>钟茂森</li>
+        </ul>
+        <ol>
+          {% for a in chapter.anotations.all %}
+          <li>{{ a.context }}</li>
+          {% endfor %}
+        </ol>
+      </div><!-- panel-body -->
+    </div><!-- collapseOne -->
+  </div><!-- panel -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <i class="glyphicon glyphicon-pencil"></i>
+        批注
+      </h4>
+    </div><!-- panel-title -->
+    <div class="panel-body">
+      <ul class="nav nav-pills nav-stacked">
+        <li class="b2" id="a1">
+          <span>规矩<br/>规范</span>
+        </li>
+        <li class="active b1" id="a2">
+          <span>特指孔子</span>
+        </li>
+        <li class="b1" id="a3">
+          <span>孝顺、孝子</span>
+        </li>
+      </ul>
+    </div><!-- panel-body -->
+  </div><!-- panel -->
+</div><!-- 4 -->
 {% endblock %}

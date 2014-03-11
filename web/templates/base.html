@@ -6,6 +6,7 @@
     <title>{% block title %}{% endblock %} - 正念阅读</title>
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet" type="text/css"/>
     <link href="{% static "css/base.min.css" %}" rel="stylesheet" type="text/css"/>
+    {% block css %}{% endblock %}
   </head>
   <body>
     {% include 'includes/nav.html' %}
@@ -20,5 +21,6 @@
     <script src="{% static "js/angular.min.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/ui-bootstrap-tpls.min.js" %}"></script>
+    {% block js %}{% endblock %}
   </body>
 </html>
