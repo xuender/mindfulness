@@ -9,7 +9,7 @@ module.exports = (grunt)->
   grunt.loadNpmTasks('grunt-coffeelint')
   grunt.loadNpmTasks('grunt-contrib-cssmin')
   grunt.loadNpmTasks('grunt-contrib-htmlmin')
-  grunt.loadNpmTasks('grunt-shell')
+  #grunt.loadNpmTasks('grunt-shell')
   grunt.loadNpmTasks('grunt-bumpx')
 
   grunt.initConfig(

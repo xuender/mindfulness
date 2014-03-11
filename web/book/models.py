@@ -114,4 +114,4 @@ class Annotation(UpdateModel):
     class Meta:
         verbose_name = '批注'
         verbose_name_plural = '批注'
-        ordering = ['start']
+        ordering = ['row', 'start']

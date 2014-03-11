@@ -49,3 +49,40 @@ $ ->
   createAnnotation($('#s1'), $('#s1'), $('#a1'))
   createAnnotation($('#s2'), $('#s3'), $('#a2'))
   createAnnotation($('#s4'), $('#s5'), $('#a3'))
+
+angular.module('book', [
+  'ui.bootstrap'
+]).directive('context', ->
+  ($scope, elm, attr)->
+    console.info elm.text()
+    html = ''
+    row = 0
+    for p in elm.text().split('\n')
+      row += 1
+      html += '<p>'
+      start = 0
+      for s in p
+        start += 1
+        #TODO 使用正则表达式拆分一句话
+        html += "<span id='s#{row}_#{start}'>#{s}</span>"
+      html += '</p>'
+    elm.html(html)
+)
+
+BookCtrl = ($scope)->
+  $scope.as = [
+    {
+      row: 1
+      start: 3
+      end: 3
+      context: '规则'
+    }
+    {
+      row: 1
+      start: 4
+      end: 5
+      context: '孔子'
+    }
+  ]
+  console.info $scope.as
+BookCtrl.$inject = ['$scope']
