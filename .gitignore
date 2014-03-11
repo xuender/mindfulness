@@ -5,3 +5,4 @@ web/static/
 *~
 *.sqlite3
 *.pyc
+*.log
