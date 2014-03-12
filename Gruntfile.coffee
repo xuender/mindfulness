@@ -82,6 +82,7 @@ module.exports = (grunt)->
       chapter:
         files:
           'web/static/js/chapter.min.js': [
+            'src/js/utils.coffee'
             'src/js/chapter.coffee'
           ]
     uglify:
