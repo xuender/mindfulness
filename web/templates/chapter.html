@@ -79,6 +79,10 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
+          <button class="btn btn-primary btn-xs pull-right">
+            <i class="glyphicon glyphicon-pushpin"></i>
+            增加
+          </button>
           <i class="glyphicon glyphicon-pencil"></i>
           批注
         </h4>
@@ -86,7 +90,11 @@
       <div class="panel-body">
         <ul class="nav nav-pills nav-stacked">
           {% verbatim %}
-          <li ng-repeat="a in as" class="b1 ann" id="a{{ a.id }}" data="{{ a}}">
+          <li ng-repeat="a in as" class="b1 ann"
+            id="a{{ a.id }}" data="{{ a }}">
+            <button class="pull-right btn btn-danger btn-xs">
+              <i class="glyphicon glyphicon-trash"></i>
+            </button>
             {{ a.context }}
           </li>
           {% endverbatim %}
