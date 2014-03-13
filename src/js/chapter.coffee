@@ -5,11 +5,21 @@ Copyright (C) 2014 ender xu <xuender@gmail.com>
 Distributed under terms of the MIT license.
 ###
 
+showLine = ->
+  $('.line').remove()
+  $('.ann').each(->
+    a = JSON.parse($(this).attr('data'))
+    createAnnotation(
+      $("#s#{a.row}_#{a.start}"),
+      $("#s#{a.row}_#{a.end}"),
+      $("#a#{a.id}")
+    )
+  )
 $ ->
-  # test
-  createAnnotation($('#s1'), $('#s1'), $('#a1'))
-  createAnnotation($('#s2'), $('#s3'), $('#a2'))
-  createAnnotation($('#s4'), $('#s5'), $('#a3'))
+  $('.ann').onPositionChanged(->
+    showLine()
+  )
+  showLine()
 
 angular.module('book', [
   'ui.bootstrap'
@@ -25,26 +35,23 @@ angular.module('book', [
       html += doSpan(p, row)
       html += '</p>'
     elm.html(html)
-).directive('line', ->
-  #TODO <line row="1" start="4" end="5" to="1"/> 画第1行4到5个字到第一个批注连线
-  ($scope, elm, attr)->
-    1
 )
 
 BookCtrl = ($scope)->
   $scope.as = [
     {
+      id: 1
       row: 1
       start: 3
       end: 3
       context: '规则'
     }
     {
+      id: 2
       row: 1
       start: 4
       end: 5
       context: '孔子'
     }
   ]
-  console.info $scope.as
 BookCtrl.$inject = ['$scope']

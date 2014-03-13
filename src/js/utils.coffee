@@ -4,7 +4,42 @@ Copyright (C) 2014 ender xu <xuender@gmail.com>
 
 Distributed under terms of the MIT license.
 ###
+jQuery.fn.onPositionChanged = (trigger, millis)->
+  if (millis == null)
+    millis = 100
+  o = $(this[0])
+  if (o.length < 1)
+    return o
 
+  lastPos = null
+  lastOff = null
+  setInterval(->
+    if o == null or o.length < 1
+      return o
+    if lastPos == null
+      lastPos = o.position()
+    if lastOff == null
+      lastOff = o.offset()
+    newPos = o.position()
+    newOff = o.offset()
+    if lastPos.top != newPos.top or lastPos.left != newPos.left
+      $(this).trigger('onPositionChanged',
+        lastPos: lastPos
+        newPos: newPos
+      )
+      if typeof (trigger) == "function"
+        trigger(lastPos, newPos)
+      lastPos = o.position()
+    if lastOff.top != newOff.top or lastOff.left != newOff.left
+      $(this).trigger('onOffsetChanged',
+        lastOff: lastOff
+        newOff: newOff
+      )
+      if typeof (trigger) == "function"
+        trigger(lastOff, newOff)
+      lastOff= o.offset()
+  , millis)
+  o
 doSpan = (str, row)->
   # 将字符串改造成<span>分割的单词组合
   start = 0
@@ -27,6 +62,7 @@ createLine = (x1, y1, x2, y2, color='#000', stroke='1', zindex=1000)->
   isIE = navigator.userAgent.indexOf("MSIE") > -1
   line = document.createElement('div')
   length = Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))
+  line.classList.add('line')
   line.style.width = length + 'px'
   line.style.borderBottom = stroke + 'px solid'
   line.style.borderColor = color

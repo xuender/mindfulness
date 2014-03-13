@@ -85,17 +85,8 @@
       </div><!-- panel-title -->
       <div class="panel-body">
         <ul class="nav nav-pills nav-stacked">
-          <li class="b2" id="a1">
-            <span>规则</span>
-          </li>
-          <li class="active b1" id="a2">
-            <span>特指孔子</span>
-          </li>
-          <li class="b1" id="a3">
-            <span>这里是尊敬兄长的意思。</span>
-          </li>
           {% verbatim %}
-          <li ng-repeat="a in as" class="b1">
+          <li ng-repeat="a in as" class="b1 ann" id="a{{ a.id }}" data="{{ a}}">
             {{ a.context }}
           </li>
           {% endverbatim %}
