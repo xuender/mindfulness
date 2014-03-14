@@ -36,6 +36,7 @@ module.exports = (grunt)->
         files: [
           cwd: 'bower_components/angular/'
           src: [
+            'angular.js'
             'angular.min.js'
             'angular.min.js.map'
           ]
@@ -84,6 +85,7 @@ module.exports = (grunt)->
           'web/static/js/chapter.min.js': [
             'src/js/utils.coffee'
             'src/js/chapter.coffee'
+            'src/js/web.coffee'
           ]
     uglify:
       main:
@@ -101,9 +103,8 @@ module.exports = (grunt)->
         options:
           removeComments: true,
           collapseWhitespace: true
-        files:
-          'dist/index.html': 'src/index.html'
-          'dist/about.html': 'src/about.html'
+        files: {}
+        #  'web/static/annotation.html': 'src/annotation.html'
     cssmin:
       toolbox:
         expand: true
@@ -117,6 +118,11 @@ module.exports = (grunt)->
           'src/**/*.css'
         ]
         tasks: ['cssmin']
+      html:
+        files: [
+          'src/*.html'
+        ]
+        tasks: ['htmlmin']
       coffee:
         files: [
           'src/**/*.coffee'

@@ -1,0 +1,42 @@
+<div class="modal-header">
+  <h3>
+    <i class="glyphicon glyphicon-pushpin"></i>
+    用户登录
+  </h3>
+</div><!-- modal-header -->
+<form method="post" class="form-horizontal" action="{% url 'django.contrib.auth.views.login' %}">
+  <div class="modal-body">
+    {% csrf_token %}
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="id_username">
+        用户名
+      </label>
+      <div class="col-sm-8">
+        <input id="id_username" maxlength="254" name="username" 
+        type="text" class="form-control">
+      </div><!-- col-sm-8 -->
+    </div><!-- form-group -->
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="id_password">
+        密码
+      </label>
+      <div class="col-sm-8">
+        <input id="id_password" name="password" 
+        type="password" class="form-control">
+      </div><!-- col-sm-8 -->
+    </div><!-- form-group -->
+    <input type="hidden" name="next" value="{{ next }}" />
+  </div><!-- modal-body -->
+  <div class="modal-footer">
+    <button ng-click="close()" class="btn btn-warning">
+      注册
+    </button>
+    <button type="submit" value="登陆" class="btn btn-primary">
+      <i class="glyphicon glyphicon-floppy-disk"></i>
+      登录
+    </button>
+    <button ng-click="close()" class="btn btn-warning">
+      取消
+    </button>
+  </div><!-- model-footer -->
+</form>
