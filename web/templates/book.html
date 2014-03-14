@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}书籍{% endblock %}
+{% block init_js %}var IS_STAR = {{ isStar|lower }};{% endblock %}
 {% block content %}
 {% include 'includes/toolbar.html' %}
 <ol>

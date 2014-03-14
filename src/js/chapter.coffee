@@ -10,6 +10,16 @@ AnnotationCtrl = ($scope, $modalInstance)->
     $modalInstance.close('close')
 AnnotationCtrl.$inject = ['$scope', '$modalInstance']
 
+ToolbarCtrl = ($scope)->
+  $scope.isStar = IS_STAR
+  $scope.$watch('isStar', (n, o)->
+    if n
+      $scope.starLabel = '取消关注'
+    else
+      $scope.starLabel = '关注'
+  )
+ToolbarCtrl.$inject = ['$scope']
+
 BookCtrl = ($scope, $modal)->
   $scope.as = [
     {

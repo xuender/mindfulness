@@ -10,6 +10,9 @@ class Book(UpdateModel):
             max_length=50,
             verbose_name='标题',
             )
+    def isStar(self, user):
+        '用户是否关注'
+        return self.stars.filter(create_by=user).count() > 0
 
     def __unicode__(self):
         return self.title

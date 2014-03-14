@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block title %}章节{% endblock %}
+{% block init_js %}var IS_STAR = {{ isStar|lower }};{% endblock %}
 {% block js %}
 <script src="{% static "js/chapter.min.js" %}"></script>
 {% endblock %}

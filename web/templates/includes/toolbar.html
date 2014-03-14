@@ -1,9 +1,12 @@
-<div class="btn-toolbar pull-right" role="toolbar">
+<div class="btn-toolbar pull-right" role="toolbar"
+ng-controller="ToolbarCtrl">
   <div class="btn-group">
-    <button class="btn btn-default">
+    {% verbatim %}
+    <button class="btn btn-default" ng-model="isStar" btn-checkbox>
       <i class="glyphicon glyphicon-star"></i>
-      关注
+      {{ starLabel }}
     </button>
+    {% endverbatim %}
     <button class="btn btn-success count">
       {{ book.stars.count }}
     </button>
