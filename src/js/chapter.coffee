@@ -10,33 +10,31 @@ AnnotationCtrl = ($scope, $modalInstance)->
     $modalInstance.close('close')
 AnnotationCtrl.$inject = ['$scope', '$modalInstance']
 
-ToolbarCtrl = ($scope)->
+ToolbarCtrl = ($scope, $http)->
   $scope.isStar = IS_STAR
-  $scope.$watch('isStar', (n, o)->
-    if n
-      $scope.starLabel = '取消关注'
+  $scope.disabled = false
+  $scope.starCount = STAR_COUNT
+  $scope.stared = (b, id)->
+    # 设置星标
+    $scope.disabled = true
+    if b
+      url = "/star/#{id}"
     else
-      $scope.starLabel = '关注'
-  )
-ToolbarCtrl.$inject = ['$scope']
+      url = "/unstar/#{id}"
+    $http(
+      method: 'POST'
+      headers:
+        'X-CSRFToken': CSRF
+      url: url
+    ).success((data, status, headers, config)->
+      $scope.isStar = b
+      $scope.disabled = false
+      $scope.starCount = data
+    ).error((data, status, headers, config)->
+    )
+ToolbarCtrl.$inject = ['$scope', '$http']
 
 BookCtrl = ($scope, $modal)->
-  $scope.as = [
-    {
-      id: 1
-      row: 1
-      start: 3
-      end: 3
-      context: '规则'
-    }
-    {
-      id: 2
-      row: 1
-      start: 4
-      end: 5
-      context: '孔子'
-    }
-  ]
   $scope.add = ->
     m = $modal.open
       backdrop: true

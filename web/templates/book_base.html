@@ -1,17 +1,14 @@
-{% extends "book_base.html" %}
+{% extends "base.html" %}
 {% load staticfiles %}
 {% block title %}书籍{% endblock %}
 {% block init_js %}
 var IS_STAR = {{ isStar|lower }};
+var CSRF = '{{ csrf_token }}';
 var STAR_COUNT = {{ book.stars.count }};
 {% endblock %}
 {% block js %}
 <script src="{% static "js/chapter.min.js" %}"></script>
 {% endblock %}
-{% block content %}
-<ol>
-  {% for chapter in book.chapters.all %}
-  <li><a href="/chapter/{{ chapter.id }}">{{ chapter.title }}</a></li>
-  {% endfor %}
-</ol>
+{% block top %}
+{% include 'includes/toolbar.html' %}
 {% endblock %}

@@ -83,12 +83,12 @@ class AnnotationAdmin(BaseAdmin):
     search_fields = ['context']
     date_hierarchy = 'modify_at'
     list_filter = ['chapter']
-    list_display = ('chapter', 'row', 'start', 'end', 'create_by', 'create_at', 'modify_by', 'modify_at')
+    list_display = ('chapter', 'row', 'start', 'end', 'style', 'create_by', 'create_at', 'modify_by', 'modify_at')
     readonly_fields = ('create_by', 'create_at', 'modify_by', 'modify_at')
     fieldsets = [
         (
             None,
-            {'fields': ['chapter', 'row', 'start', 'end', 'context']},
+            {'fields': ['chapter', 'row', 'start', 'end', 'style', 'context']},
         ),
         (
             '其他',

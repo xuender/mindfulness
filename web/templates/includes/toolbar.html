@@ -1,15 +1,21 @@
 <div class="btn-toolbar pull-right" role="toolbar"
 ng-controller="ToolbarCtrl">
   <div class="btn-group">
-    {% verbatim %}
-    <button class="btn btn-default" ng-model="isStar" btn-checkbox>
+    <button class="btn btn-default" ng-disabled="disabled"
+    ng-click="stared(true, {{ book.id }})" ng-hide="isStar">
+      <i class="glyphicon glyphicon-star-empty"></i>
+      关注
+    </button>
+    <button class="btn btn-default active" ng-disabled="disabled"
+    ng-click="stared(false, {{ book.id }})" ng-show="isStar">
       <i class="glyphicon glyphicon-star"></i>
-      {{ starLabel }}
+      取消关注
     </button>
-    {% endverbatim %}
-    <button class="btn btn-success count">
-      {{ book.stars.count }}
-    </button>
+    <a class="btn btn-success count" href="/stargazers/{{ book.id }}">
+      {% verbatim %}
+      {{ starCount }}
+      {% endverbatim %}
+    </a>
   </div><!-- btn-group -->
   <div class="btn-group">
     <button class="btn btn-default">

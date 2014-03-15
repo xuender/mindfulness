@@ -1,12 +1,7 @@
-{% extends "base.html" %}
+{% extends "book_base.html" %}
 {% load staticfiles %}
-{% block title %}章节{% endblock %}
-{% block init_js %}var IS_STAR = {{ isStar|lower }};{% endblock %}
-{% block js %}
-<script src="{% static "js/chapter.min.js" %}"></script>
-{% endblock %}
+{% block title %}章节 {{ book }}{% endblock %}
 {% block content %}
-{% include 'includes/toolbar.html' %}
 <div class="row" ng-controller="BookCtrl">
   <div class="col-xs-8">
     <h2>{{ chapter.title }}</h2>
@@ -69,11 +64,6 @@
             <li>钟茂森</li>
             <li>钟茂森</li>
           </ul>
-          <ol>
-            {% for a in chapter.anotations.all %}
-            <li>{{ a.context }}</li>
-            {% endfor %}
-          </ol>
         </div><!-- panel-body -->
       </div><!-- collapseOne -->
     </div><!-- panel -->
@@ -91,18 +81,23 @@
       </div><!-- panel-title -->
       <div class="panel-body">
         <ul class="nav nav-pills nav-stacked">
-          {% verbatim %}
-          <li ng-repeat="a in as" class="b1 ann"
-            id="a{{ a.id }}" data="{{ a }}">
+          {% for a in chapter.anns %}
+          <li class="b1 ann"
+            id="a{{ a.id }}" data="{{ a.toJson }}">
             <button class="pull-right btn btn-danger btn-xs">
               <i class="glyphicon glyphicon-trash"></i>
             </button>
             {{ a.context }}
           </li>
-          {% endverbatim %}
+          {% endfor %}
         </ul>
       </div><!-- panel-body -->
     </div><!-- panel -->
   </div><!-- 4 -->
 </div><!-- row -->
+{% for a in chapter.lines %}
+<span id="l{{ a.id }}" data="{{ a.toJson }}">
+  {{ a.id }}
+</span>
+{% endfor %}
 {% endblock %}

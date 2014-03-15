@@ -11,6 +11,7 @@
   <body>
     {% include 'includes/nav.html' %}
     <div class="container">
+      {% block top %}{% endblock %}
       {% block content %}{% endblock %}
     </div><!-- container -->
     <footer class="container">
@@ -18,6 +19,7 @@
       正念
     </footer>
     <script type="text/javascript">
+      var CSRF = '{{ csrf_token }}';
       {% block init_js %}{% endblock %}
     </script>
     <script src="{% static "js/jquery.min.js" %}"></script>
