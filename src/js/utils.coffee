@@ -4,6 +4,27 @@ Copyright (C) 2014 ender xu <xuender@gmail.com>
 
 Distributed under terms of the MIT license.
 ###
+
+selectData = ->
+  '获取选择的数据'
+  ret = {}
+  s = window.getSelection()
+  if s.type == 'Range'
+    base = $(s.anchorNode.parentNode)
+    extent = $(s.extentNode.parentNode)
+    b = true
+    while b
+      id = base.attr('id')
+      if id and id.length > 3
+        ids = id.substring(1).split('_')
+        ret['end'] = ids[1]
+        ret['row'] = ids[0]
+        if 'start' not of ret
+          ret['start'] = ids[1]
+      b = base.size() > 0 and base[0] != extent[0]
+      base = base.next()
+    ret
+
 jQuery.fn.onPositionChanged = (trigger, millis)->
   if (millis == null)
     millis = 100
