@@ -2,7 +2,30 @@
 from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
+import json
 
+class ComplexEncoder(json.JSONEncoder):
+    '日期格式转换成JSON'
+    def default(self, obj):
+        if isinstance(obj, datetime):
+            return obj.strftime('%Y-%m-%d %H:%M:%S')
+        elif isinstance(obj, date):
+            return obj.strftime('%Y-%m-%d')
+        return json.JSONEncoder.default(self, obj)
+
+class Message(object):
+    '传输消息'
+    ok = True
+    def __str__(self):
+        '转换成字符串'
+        d = self.__dict__.copy()
+        if 'data' in d and hasattr(d['data'], '__dict__'):
+            temp = d['data'].__dict__
+            d['data'] = {}
+            for k in temp:
+                if not hasattr(temp[k] , '__dict__'):
+                    d['data'][k] = temp[k]
+        return json.dumps(d, cls=ComplexEncoder)
 
 class BaseModel(models.Model):
     '基础抽象实体'
@@ -14,6 +37,7 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
+
 class UserModel(BaseModel):
     '用户抽象实体'
     create_by=models.ForeignKey(User,
@@ -27,8 +51,9 @@ class UserModel(BaseModel):
 
     def save(self, *args, **kwargs):
         '保存时更修改时间'
-        print 'create user -- %s, id:%d'%(self.user, self.user.id)
-        self.create_by = self.user
+        if hasattr(self, 'user'):
+            print 'create user -- %s, id:%d'%(self.user, self.user.id)
+            self.create_by = self.user
         super(BaseModel, self).save(*args, **kwargs)
     class Meta:
         abstract = True
@@ -48,10 +73,11 @@ class UpdateModel(UserModel):
     def save(self, *args, **kwargs):
         '保存时更修改时间'
         self.modify_at = datetime.now()
-        self.modify_by = self.user
-        if not self.create_by_id:
-            self.create_by = self.user
-        print 'modify user -- %s, id:%d'%(self.user, self.user.id)
+        if hasattr(self, 'user'):
+            self.modify_by = self.user
+            if not self.create_by_id:
+                self.create_by = self.user
+            print 'modify user -- %s, id:%d'%(self.user, self.user.id)
         super(UserModel, self).save(*args, **kwargs)
 
     class Meta:

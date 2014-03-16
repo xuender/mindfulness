@@ -31,6 +31,11 @@ ToolbarCtrl = ($scope, $http)->
       $scope.disabled = false
       $scope.starCount = data
     ).error((data, status, headers, config)->
+      if b
+        alert('关注失败，请检查网络')
+      else
+        alert('取消关注失败，请检查网络')
+      $scope.disabled = false
     )
 ToolbarCtrl.$inject = ['$scope', '$http']
 

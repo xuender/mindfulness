@@ -26,6 +26,7 @@ class Chapter(UpdateModel):
     def lines(self):
         return self.anotations.filter(~Q(style='a'))
 
+
     def __unicode__(self):
         return u'%s:%s'%(self.book, self.title)
 

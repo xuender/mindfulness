@@ -37,6 +37,7 @@ class Annotation(UpdateModel):
             blank=True, null=True,
             verbose_name='正文',
             )
+
     def toJson(self):
         '转换成JSON字串'
         return json.dumps({
@@ -47,6 +48,15 @@ class Annotation(UpdateModel):
             'context': self.context,
             'style': self.style
             })
+
+    @staticmethod
+    def annotate(obj):
+        '增加批注'
+        if obj.chapter.anotations.filter(row=obj.row,
+                start=obj.start, end=obj.end, style=obj.style).count() > 0:
+            return '标注重复，请修改'
+        obj.save()
+        return obj
 
     def _select(self):
         row = self.chapter.context.split('\n')[self.row - 1]
@@ -68,3 +78,4 @@ class Annotation(UpdateModel):
         verbose_name = '批注'
         verbose_name_plural = '批注'
         ordering = ['row', 'start']
+        unique_together = ('create_by', 'chapter', 'row', 'start', 'end', 'style')

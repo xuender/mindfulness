@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from models import Book, Chapter, Star
+from models import Book, Chapter, Star, Annotation
+from common.models import Message
 from django.template import RequestContext
 from django.contrib.auth import logout
 from django.http import HttpResponse
 from django.shortcuts import redirect, render_to_response
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
+from django.core import serializers
 
 def home(request):
     '首页'
@@ -58,6 +60,53 @@ def logout_view(request):
     '退出'
     logout(request)
     return redirect('/')
+
+def readValue(req, key, message, msg):
+    '读取参数'
+    data = req.POST.get(key, '')
+    if data == '':
+        data = req.GET.get(key, '')
+    if data == '':
+        message.ok = False
+        message.msg = msg
+    return data
+
+def demo(request):
+    data = serializers.serialize('json', Book.objects.all())
+    return HttpResponse(data, mimetype='application/json')
+
+@login_required
+@require_http_methods(["POST"])
+def annotate(request, id):
+    '增加备注'
+    m = Message()
+    a = Annotation()
+    a.chapter = Chapter.objects.get(id=id)
+    row = readValue(request, 'row', m, '行号错误')
+    if not m.ok:
+        return HttpResponse(m, mimetype='application/json')
+    a.row = int(row)
+    start = readValue(request, 'start', m, '起始错误')
+    if not m.ok:
+        return HttpResponse(m, mimetype='application/json')
+    a.start = int(start)
+    end = readValue(request, 'end', m, '终止错误')
+    if not m.ok:
+        return HttpResponse(m, mimetype='application/json')
+    a.end = int(end)
+    style = readValue(request, 'style', m, '式样错误')
+    if not m.ok:
+        return HttpResponse(m, mimetype='application/json')
+    a.style = style
+    a.context = request.POST.get('context', '')
+    a.user = request.user
+    ret = Annotation.annotate(a)
+    if type(ret) == str:
+        m.ok = False
+        m.msg = ret
+        return HttpResponse(m, mimetype='application/json')
+    m.data = ret
+    return HttpResponse(m, mimetype='application/json')
 
 @login_required
 @require_http_methods(["POST"])

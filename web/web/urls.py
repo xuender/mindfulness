@@ -16,6 +16,9 @@ urlpatterns = patterns('',
     url(r'^star/(?P<id>\d+)$', 'book.views.star', name='star'),
     url(r'^unstar/(?P<id>\d+)$', 'book.views.unstar', name='unstar'),
     url(r'^annotation$', 'book.views.annotation', name='annotation'),
+    url(r'^demo$', 'book.views.demo', name='demo'),
+    url(r'^chapter/(?P<id>\d+)/annotate$', 'book.views.annotate', name='annotate'),
+
     url(r'^accounts/logout/', 'book.views.logout_view', name='logout'),
     url(r'^accounts/login/$', 'django.contrib.auth.views.login', name='login'),
 )
