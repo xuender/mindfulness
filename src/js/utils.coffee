@@ -103,6 +103,7 @@ createLine = (x1, y1, x2, y2, color='#000', stroke='1', zindex=1000)->
     line.style.left = x1 - 0.5*length*(1 - Math.cos(angle)) + 'px'
     line.style.MozTransform = line.style.WebkitTransform = line.style.OTransform= 'rotate(' + angle + 'rad)'
   $('body').append(line)
+  line
 
 setColor = (s1, s2, color)->
   # 设置颜色区域
@@ -110,20 +111,41 @@ setColor = (s1, s2, color)->
   if s1.attr('id') != s2.attr('id') and s1.next().attr('id')
       setColor(s1.next(), s2, color)
 
-underline = (s1, s2, style, start=null)->
+drawLine = (x1, y1, x2, y2, css)->
+  # 画线
+  isIE = navigator.userAgent.indexOf("MSIE") > -1
+  line = document.createElement('div')
+  line.classList.add(css)
+  length = Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))
+  line.style.width = length + 'px'
+  if isIE
+    line.style.top = (y2 > y1) ? y1 + 'px' : y2 + 'px'
+    line.style.left = x1 + 'px'
+    nCos = (x2-x1)/length
+    nSin = (y2-y1)/length
+    line.style.filter = "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=" + nCos + ", M12=" + -1*nSin + ", M21=" + nSin + ",M22=" + nCos + ")"
+  else
+    angle = Math.atan((y2-y1)/(x2-x1))
+    line.style.top = y1 + 0.5*length*Math.sin(angle) + 'px'
+    line.style.left = x1 - 0.5*length*(1 - Math.cos(angle)) + 'px'
+    line.style.MozTransform = line.style.WebkitTransform = line.style.OTransform= 'rotate(' + angle + 'rad)'
+  $('body').append(line)
+  line
+
+underline = (s1, s2, ul_css, start=null)->
   # 给对象s1到s2之间所有对象画线
   y1 = s1.offset().top + s1.height() + 3
   x1 = s1.offset().left
   y2 = s2.offset().top + s2.height() + 3
   x2 = s2.offset().left + s2.width()
   if y1 == y2
-    createLine(x1, y1, x2, y2, 'red', 2)
+    drawLine(x1, y1, x2, y2, ul_css)
     if start !=null && s1[0] != start[0]
-      underline(start, s1.prev(), style, start)
+      underline(start, s1.prev(), ul_css, start)
   else
     if start == null
       start = s1
-    underline(s1.next(), s2, style, start)
+    underline(s1.next(), s2, ul_css, start)
 
 createAnnotation = (s1, s2, annotation)->
   # 批注连线
