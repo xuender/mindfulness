@@ -6,7 +6,7 @@ Distributed under terms of the MIT license.
 ###
 
 selectData = ->
-  '获取选择的数据'
+  #获取选择的位置信息
   ret = {}
   s = window.getSelection()
   if s.type == 'Range'
@@ -26,6 +26,7 @@ selectData = ->
     ret
 
 jQuery.fn.onPositionChanged = (trigger, millis)->
+  #位置变化事件
   if (millis == null)
     millis = 100
   o = $(this[0])
@@ -61,8 +62,9 @@ jQuery.fn.onPositionChanged = (trigger, millis)->
       lastOff= o.offset()
   , millis)
   o
+
 doSpan = (str, row)->
-  # 将字符串改造成<span>分割的单词组合
+  # 将字符串改造成<span>分割的单词组合，思考一下是否有必要放到后台执行
   start = 0
   html = ''
   k = /[\s|，|。]+/
@@ -103,9 +105,25 @@ createLine = (x1, y1, x2, y2, color='#000', stroke='1', zindex=1000)->
   $('body').append(line)
 
 setColor = (s1, s2, color)->
+  # 设置颜色区域
   s1.css('background-color', color)
   if s1.attr('id') != s2.attr('id') and s1.next().attr('id')
       setColor(s1.next(), s2, color)
+
+underline = (s1, s2, style, start=null)->
+  # 给对象s1到s2之间所有对象画线
+  y1 = s1.offset().top + s1.height() + 3
+  x1 = s1.offset().left
+  y2 = s2.offset().top + s2.height() + 3
+  x2 = s2.offset().left + s2.width()
+  if y1 == y2
+    createLine(x1, y1, x2, y2, 'red', 2)
+    if start !=null && s1[0] != start[0]
+      underline(start, s1.prev(), style, start)
+  else
+    if start == null
+      start = s1
+    underline(s1.next(), s2, style, start)
 
 createAnnotation = (s1, s2, annotation)->
   # 批注连线
