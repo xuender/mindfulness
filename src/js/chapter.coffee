@@ -73,5 +73,6 @@ BookCtrl = ($scope, $modal)->
     s = selectData()
     console.debug s
     underline($("#s#{s.row}_#{s.start}"), $("#s#{s.row}_#{s.end}"), 'ul_1')
+    $scope.menuOpen = false
 
 BookCtrl.$inject = ['$scope', '$modal']
