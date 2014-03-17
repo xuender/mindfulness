@@ -4,12 +4,32 @@
 {% block content %}
 <div class="row" ng-controller="BookCtrl">
   <div class="col-xs-8">
+    <div class="dropdown" ng-class="{open: menuOpen}"
+        ng-style="menuStyle">
+      <ul class="dropdown-menu" role="menu">
+        <li role="presentation">
+          <a role="menuitem" tabindex="-1" ng-click="emphasis()" href="">
+            重点
+          </a>
+        </li>
+        <li role="presentation">
+          <a role="menuitem" tabindex="-1" href="#">精辟</a>
+        </li>
+        <li role="presentation">
+          <a role="menuitem" tabindex="-1" href="#">疑难</a>
+        </li>
+        <li role="presentation" class="divider"></li>
+        <li role="presentation">
+          <a role="menuitem" tabindex="-1" href="#">删除</a>
+        </li>
+      </ul>
+    </div><!-- dropdown -->
     <h2>{{ chapter.title }}</h2>
     <div class="jumbotron">
       {% comment %}
       {{ chapter.context }}
       {% endcomment %}
-      <p context>{{ chapter.context }}</p>
+      <p ng-mouseup="popup()" context>{{ chapter.context }}</p>
       <p>弟子<span id="s1">规</span>，<span id="s2">圣</span><span id="s3">人</span>训。</p>
       <p>首<span id="s4">孝</span><span id="s5">悌</span>，次谨信。</p>
       <p>有余力，则学文。</p>

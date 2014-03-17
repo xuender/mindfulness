@@ -11,9 +11,11 @@ ng\:form {
 .count {
   font-weight: bold;
 }
+/* 页脚 */
 footer {
   text-align: center;
 }
+/* 段落 */
 p {
   text-indent: 2em;
 }
@@ -53,9 +55,17 @@ border: 5px;
   left: 3.177735493110167px;
   -webkit-transform: rotate(0.30092023436042514rad);
 }
+
+.dropdown {
+  position: absolute;
+  z-index: 2000;
+}
+/* 下划线 重点 */
 .ul_1 {
   border-bottom: 2px solid;
   border-color: red;
   position: absolute;
   z-index: 1000;
 }
+/* 波浪线 精辟 */
+/* 圆点  疑难 */

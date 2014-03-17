@@ -52,4 +52,26 @@ BookCtrl = ($scope, $modal)->
     ,->
       console.info('close')
     )
+  # 弹出菜单位置
+  $scope.menuStyle = {
+  }
+  # 弹出菜单是否打开
+  $scope.menuOpen = false
+  $scope.popup = ->
+    # 弹出菜单
+    s = selectData()
+    if s and s.ok
+      $scope.menuStyle = {
+        top: s.y
+        left: s.x
+      }
+      $scope.menuOpen = true
+    else
+      $scope.menuOpen = false
+  $scope.emphasis = ->
+    # 重点
+    s = selectData()
+    console.debug s
+    underline($("#s#{s.row}_#{s.start}"), $("#s#{s.row}_#{s.end}"), 'ul_1')
+
 BookCtrl.$inject = ['$scope', '$modal']

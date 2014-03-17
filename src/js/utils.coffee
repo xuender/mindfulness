@@ -19,10 +19,13 @@ selectData = ->
         ids = id.substring(1).split('_')
         ret['end'] = ids[1]
         ret['row'] = ids[0]
+        ret['x'] = base.position().left
+        ret['y'] = base.position().top + base.height()
         if 'start' not of ret
           ret['start'] = ids[1]
       b = base.size() > 0 and base[0] != extent[0]
       base = base.next()
+    ret['ok'] = 'start' of ret and 'end' of ret and 'row' of ret
     ret
 
 jQuery.fn.onPositionChanged = (trigger, millis)->
@@ -134,9 +137,9 @@ drawLine = (x1, y1, x2, y2, css)->
 
 underline = (s1, s2, ul_css, start=null)->
   # 给对象s1到s2之间所有对象画线
-  y1 = s1.offset().top + s1.height() + 3
+  y1 = s1.offset().top + s1.height() + 1
   x1 = s1.offset().left
-  y2 = s2.offset().top + s2.height() + 3
+  y2 = s2.offset().top + s2.height() + 1
   x2 = s2.offset().left + s2.width()
   if y1 == y2
     drawLine(x1, y1, x2, y2, ul_css)
