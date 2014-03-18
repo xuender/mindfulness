@@ -74,7 +74,6 @@ doSpan = (str, row)->
   re = /([\w-]+)|([\s|，|。]+)|(\d+)|([^\x00-\xff])/ig
   r = ''
   while r=re.exec(str)
-    #console.info r
     s = r[0]
     if k.test(s)
       html += "<span>#{s}</span>"
@@ -137,9 +136,9 @@ drawLine = (x1, y1, x2, y2, css)->
 
 underline = (s1, s2, ul_css, start=null)->
   # 给对象s1到s2之间所有对象画线
-  y1 = s1.offset().top + s1.height() + 1
+  y1 = s1.offset().top + s1.height() + 3
   x1 = s1.offset().left
-  y2 = s2.offset().top + s2.height() + 1
+  y2 = s2.offset().top + s2.height() + 3
   x2 = s2.offset().left + s2.width()
   if y1 == y2
     drawLine(x1, y1, x2, y2, ul_css)

@@ -60,12 +60,18 @@ border: 5px;
   position: absolute;
   z-index: 2000;
 }
-/* 下划线 重点 */
-.ul_1 {
-  border-bottom: 2px solid;
+.ul_l, .ul_d {
+  border-width: 0px 0px 3px 0px;
   border-color: red;
   position: absolute;
   z-index: 1000;
 }
+/* 下划线 重点 */
+.ul_l {
+  border-style: solid;
+}
 /* 波浪线 精辟 */
+.ul_d {
+  border-style: double;
+}
 /* 圆点  疑难 */

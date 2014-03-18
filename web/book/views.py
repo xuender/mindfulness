@@ -9,6 +9,7 @@ from django.shortcuts import redirect, render_to_response
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.core import serializers
+import json
 
 def home(request):
     '首页'
@@ -61,15 +62,12 @@ def logout_view(request):
     logout(request)
     return redirect('/')
 
-def readValue(req, key, message, msg):
+def readValue(data, key, message, msg):
     '读取参数'
-    data = req.POST.get(key, '')
-    if data == '':
-        data = req.GET.get(key, '')
-    if data == '':
+    if key not in data:
         message.ok = False
         message.msg = msg
-    return data
+    return data[key]
 
 def demo(request):
     data = serializers.serialize('json', Book.objects.all())
@@ -82,19 +80,20 @@ def annotate(request, id):
     m = Message()
     a = Annotation()
     a.chapter = Chapter.objects.get(id=id)
-    row = readValue(request, 'row', m, '行号错误')
+    data = json.loads(request.body)
+    row = readValue(data, 'row', m, '行号错误')
     if not m.ok:
         return HttpResponse(m, mimetype='application/json')
     a.row = int(row)
-    start = readValue(request, 'start', m, '起始错误')
+    start = readValue(data, 'start', m, '起始错误')
     if not m.ok:
         return HttpResponse(m, mimetype='application/json')
     a.start = int(start)
-    end = readValue(request, 'end', m, '终止错误')
+    end = readValue(data, 'end', m, '终止错误')
     if not m.ok:
         return HttpResponse(m, mimetype='application/json')
     a.end = int(end)
-    style = readValue(request, 'style', m, '式样错误')
+    style = readValue(data, 'style', m, '式样错误')
     if not m.ok:
         return HttpResponse(m, mimetype='application/json')
     a.style = style
@@ -106,6 +105,7 @@ def annotate(request, id):
         m.msg = ret
         return HttpResponse(m, mimetype='application/json')
     m.data = ret
+    m.ok = True
     return HttpResponse(m, mimetype='application/json')
 
 @login_required

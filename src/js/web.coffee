@@ -20,6 +20,15 @@ $ ->
     showLine()
   )
   showLine()
+  # 显示所有下划线
+  $('.sul').each(->
+    a = JSON.parse($(this).attr('data'))
+    underline(
+      $("#s#{a.row}_#{a.start}"),
+      $("#s#{a.row}_#{a.end}"),
+      "ul_#{a.style}"
+    )
+  )
 
 angular.module('book', [
   'ui.bootstrap'

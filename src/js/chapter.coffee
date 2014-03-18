@@ -39,7 +39,7 @@ ToolbarCtrl = ($scope, $http)->
     )
 ToolbarCtrl.$inject = ['$scope', '$http']
 
-BookCtrl = ($scope, $modal)->
+BookCtrl = ($scope, $modal, $http)->
   $scope.add = ->
     m = $modal.open
       backdrop: true
@@ -69,10 +69,33 @@ BookCtrl = ($scope, $modal)->
     else
       $scope.menuOpen = false
   $scope.emphasis = ->
+    $scope.line('l')
+  $scope.incisive = ->
+    $scope.line('d')
+  $scope.line = (style)->
     # 重点
     s = selectData()
-    console.debug s
-    underline($("#s#{s.row}_#{s.start}"), $("#s#{s.row}_#{s.end}"), 'ul_1')
+    url = "/chapter/#{CHAPTER}/annotate"
+    $http.post(url,
+      {
+        row: s.row
+        start: s.start
+        end: s.end
+        style: style
+      },
+      {
+      headers:
+        'X-CSRFToken': CSRF
+      }
+    ).success((data, status, headers, config)->
+      if data.ok
+        underline($("#s#{s.row}_#{s.start}"), $("#s#{s.row}_#{s.end}"), 'ul_' + style)
+        window.getSelection().removeAllRanges()
+      else
+        alert(data.msg)
+    ).error((data, status, headers, config)->
+      console.error data
+    )
     $scope.menuOpen = false
 
-BookCtrl.$inject = ['$scope', '$modal']
+BookCtrl.$inject = ['$scope', '$modal', '$http']

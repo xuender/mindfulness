@@ -1,6 +1,10 @@
 {% extends "book_base.html" %}
 {% load staticfiles %}
 {% block title %}章节 {{ book }}{% endblock %}
+{% block init_js %}
+{{ block.super }}
+var CHAPTER = {{ chapter.id }};
+{% endblock %}
 {% block content %}
 <div class="row" ng-controller="BookCtrl">
   <div class="col-xs-8">
@@ -8,15 +12,16 @@
         ng-style="menuStyle">
       <ul class="dropdown-menu" role="menu">
         <li role="presentation">
-          <a role="menuitem" tabindex="-1" ng-click="emphasis()" href="">
+          <a role="menuitem" tabindex="-1" href=""
+            ng-click="emphasis()">
             重点
           </a>
         </li>
         <li role="presentation">
-          <a role="menuitem" tabindex="-1" href="#">精辟</a>
-        </li>
-        <li role="presentation">
-          <a role="menuitem" tabindex="-1" href="#">疑难</a>
+          <a role="menuitem" tabindex="-1" href=""
+            ng-click="incisive()">
+            精辟
+          </a>
         </li>
         <li role="presentation" class="divider"></li>
         <li role="presentation">
@@ -116,7 +121,7 @@
   </div><!-- 4 -->
 </div><!-- row -->
 {% for a in chapter.lines %}
-<span id="l{{ a.id }}" data="{{ a.toJson }}">
+<span class="sul ng-hide" data="{{ a.toJson }}">
   {{ a.id }}
 </span>
 {% endfor %}
