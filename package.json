@@ -14,8 +14,9 @@
     "grunt-contrib-coffee": "~0.10.1",
     "karma-phantomjs-launcher": "~0.1.2",
     "grunt-karma": "~0.8.2",
-    "karma-jasmine": "^0.2.2",
-    "coffee-script": "^1.7.1"
+    "karma-jasmine": "~0.2.2",
+    "coffee-script": "~1.7.1",
+    "grunt-shell": "~0.6.4"
   },
   "scripts": {
     "test": "grunt travis --verbose"

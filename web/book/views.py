@@ -97,7 +97,7 @@ def annotate(request, id):
     if not m.ok:
         return HttpResponse(m, mimetype='application/json')
     a.style = style
-    a.context = request.POST.get('context', '')
+    a.context = data['context']
     a.user = request.user
     ret = Annotation.annotate(a)
     if type(ret) == str:

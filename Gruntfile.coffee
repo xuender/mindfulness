@@ -8,7 +8,7 @@ module.exports = (grunt)->
   grunt.loadNpmTasks('grunt-coffeelint')
   grunt.loadNpmTasks('grunt-contrib-cssmin')
   grunt.loadNpmTasks('grunt-contrib-htmlmin')
-  #grunt.loadNpmTasks('grunt-shell')
+  grunt.loadNpmTasks('grunt-shell')
   grunt.loadNpmTasks('grunt-bumpx')
 
   grunt.initConfig(
@@ -111,6 +111,13 @@ module.exports = (grunt)->
         src: ['*.css', '!*.min.css'],
         dest: 'web/static/css/',
         ext: '.min.css'
+    shell:
+      runServer:
+        command: 'web/manage.py runserver --insecure'
+        options:
+          stdout: true
+          stdin: true
+          stderr: true
     watch:
       css:
         files: [

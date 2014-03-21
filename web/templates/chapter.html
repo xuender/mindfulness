@@ -25,7 +25,10 @@ var CHAPTER = {{ chapter.id }};
         </li>
         <li role="presentation" class="divider"></li>
         <li role="presentation">
-          <a role="menuitem" tabindex="-1" href="#">删除</a>
+          <a role="menuitem" tabindex="-1" href=""
+            ng-click="add()">
+            批注
+          </a>
         </li>
       </ul>
     </div><!-- dropdown -->
@@ -95,11 +98,6 @@ var CHAPTER = {{ chapter.id }};
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
-          <button class="btn btn-primary btn-xs pull-right"
-            ng-click="add()">
-            <i class="glyphicon glyphicon-pushpin"></i>
-            增加
-          </button>
           <i class="glyphicon glyphicon-pencil"></i>
           批注
         </h4>

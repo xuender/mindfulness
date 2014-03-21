@@ -6,8 +6,11 @@ Distributed under terms of the MIT license.
 ###
 
 AnnotationCtrl = ($scope, $modalInstance)->
+  $scope.ann = ''
   $scope.close = ->
     $modalInstance.close('close')
+  $scope.save =(ann) ->
+    $modalInstance.close(ann)
 AnnotationCtrl.$inject = ['$scope', '$modalInstance']
 
 ToolbarCtrl = ($scope, $http)->
@@ -41,14 +44,42 @@ ToolbarCtrl.$inject = ['$scope', '$http']
 
 BookCtrl = ($scope, $modal, $http)->
   $scope.add = ->
+    $scope.menuOpen = false
+    s = selectData()
+    console.info(s)
     m = $modal.open
       backdrop: true
       keyboard: true
       backdropClick: true
       templateUrl: '/annotation'
       controller: 'AnnotationCtrl'
-    m.result.then(->
-      console.info('ok')
+    m.result.then((res)->
+      console.info(res)
+      style = 'a'
+      if 'close' == res
+        return
+      url = "/chapter/#{CHAPTER}/annotate"
+      $http.post(url,
+        {
+          row: s.row
+          start: s.start
+          end: s.end
+          style: style
+          context: res
+        },
+        {
+        headers:
+          'X-CSRFToken': CSRF
+        }
+      ).success((data, status, headers, config)->
+        if data.ok
+          underline($("#s#{s.row}_#{s.start}"), $("#s#{s.row}_#{s.end}"), 'ul_' + style)
+          window.getSelection().removeAllRanges()
+        else
+          alert(data.msg)
+      ).error((data, status, headers, config)->
+        console.error data
+      )
     ,->
       console.info('close')
     )
