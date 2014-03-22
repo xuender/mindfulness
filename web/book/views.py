@@ -20,9 +20,12 @@ def home(request):
 def book(request, id):
     '书籍'
     book = Book.objects.get(id=id)
+    isStar = False
+    if request.user.is_authenticated():
+        isStar = book.isStar(request.user)
     context_dict = {
             'book': book,
-            'isStar': book.isStar(request.user),
+            'isStar': isStar
             }
     context = RequestContext(request, context_dict)
     return render_to_response('book.html', context)
@@ -30,10 +33,13 @@ def book(request, id):
 def chapter(request, id):
     '章节'
     c = Chapter.objects.get(id=id)
+    isStar = False
+    if request.user.is_authenticated():
+        isStar = c.book.isStar(request.user)
     context_dict = {
             'chapter': c,
             'book': c.book,
-            'isStar': c.book.isStar(request.user),
+            'isStar': isStar
             }
     context = RequestContext(request, context_dict)
     return render_to_response('chapter.html', context)
@@ -42,10 +48,13 @@ def stargazers(request, id):
     '关注的人'
     book = Book.objects.get(id=id)
     stars = book.stars.all()
+    isStar = False
+    if request.user.is_authenticated():
+        isStar = book.isStar(request.user)
     context_dict = {
             'stars': stars,
             'book': book,
-            'isStar': book.isStar(request.user),
+            'isStar': isStar
             }
     context = RequestContext(request, context_dict)
     return render_to_response('stargazers.html', context)
@@ -97,7 +106,8 @@ def annotate(request, id):
     if not m.ok:
         return HttpResponse(m, mimetype='application/json')
     a.style = style
-    a.context = data['context']
+    if 'context' in data:
+        a.context = data['context']
     a.user = request.user
     ret = Annotation.annotate(a)
     if type(ret) == str:
