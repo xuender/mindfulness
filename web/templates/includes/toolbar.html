@@ -11,7 +11,7 @@ ng-controller="ToolbarCtrl">
       <i class="glyphicon glyphicon-star"></i>
       取消关注
     </button>
-    <a class="btn btn-success count" href="/stargazers/{{ book.id }}">
+    <a class="btn btn-success count" href="/book/{{ book.id }}/stargazers">
       {% verbatim %}
       {{ starCount }}
       {% endverbatim %}

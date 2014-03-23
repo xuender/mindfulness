@@ -11,7 +11,7 @@ var STAR_COUNT = {{ book.stars.count }};
 {% block content %}
 <ol>
   {% for chapter in book.chapters.all %}
-  <li><a href="/chapter/{{ chapter.id }}">{{ chapter.title }}</a></li>
+  <li><a href="/book/{{ book.id }}/{{ chapter.id }}">{{ chapter.title }}</a></li>
   {% endfor %}
 </ol>
 {% endblock %}

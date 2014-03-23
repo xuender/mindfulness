@@ -21,9 +21,9 @@ ToolbarCtrl = ($scope, $http)->
     # 设置星标
     $scope.disabled = true
     if b
-      url = "/star/#{id}"
+      url = "/book/#{id}/star"
     else
-      url = "/unstar/#{id}"
+      url = "/book/#{id}/unstar"
     $http(
       method: 'POST'
       headers:
@@ -58,7 +58,7 @@ BookCtrl = ($scope, $modal, $http)->
       style = 'a'
       if 'close' == res
         return
-      url = "/chapter/#{CHAPTER}/annotate"
+      url = "/book/#{BOOK}/#{CHAPTER}/annotate"
       $http.post(url,
         {
           row: s.row
@@ -106,7 +106,7 @@ BookCtrl = ($scope, $modal, $http)->
   $scope.line = (style)->
     # 重点
     s = selectData()
-    url = "/chapter/#{CHAPTER}/annotate"
+    url = "/book/#{BOOK}/#{CHAPTER}/annotate"
     $http.post(url,
       {
         row: s.row
