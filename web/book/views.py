@@ -23,7 +23,7 @@ def home(request):
 def annotation(request):
     '显示标注弹出窗口'
     context = RequestContext(request)
-    if request.user.is_authenticated():
+    if hasattr(request, 'user') and request.user.is_authenticated():
         return render_to_response('annotation.html', context)
     return render_to_response('registration/login_modal.html', context)
 
@@ -103,7 +103,7 @@ def unstar(request, bid):
     return HttpResponse(book.stars.count())
 
 def get_dict(request, bid):
-    '用户是否星标本书'
+    '基本字典'
     book = Book.objects.get(id=bid)
     isStar = False
     if request.user.is_authenticated():
