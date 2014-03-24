@@ -15,6 +15,8 @@ class UserProfile(models.Model):
             )
     def __unicode__(self):
         return self.user.username
+    class Meta:
+        app_label = 'book'
 
 class Employee(models.Model):
     '雇员信息'
@@ -29,3 +31,5 @@ class Employee(models.Model):
             )
     def __unicode__(self):
         return self.user.username
+    class Meta:
+        app_label = 'book'

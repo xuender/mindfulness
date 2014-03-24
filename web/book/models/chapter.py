@@ -34,3 +34,4 @@ class Chapter(UpdateModel):
         verbose_name = '章节'
         verbose_name_plural = '章节'
         ordering = ['id']
+        app_label = 'book'

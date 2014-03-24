@@ -27,4 +27,5 @@ class Book(UpdateModel):
     class Meta:
         verbose_name = '图书'
         verbose_name_plural = '图书'
+        app_label = 'book'
         #ordering = ['status', '-visits', 'black']

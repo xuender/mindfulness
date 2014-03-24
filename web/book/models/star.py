@@ -20,3 +20,4 @@ class Star(UserModel):
         verbose_name_plural = '星标'
         ordering = ['-create_at']
         unique_together = ('create_by', 'book')
+        app_label = 'book'

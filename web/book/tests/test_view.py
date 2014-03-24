@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.models import User
 from django.test import TestCase, RequestFactory
-from views import home, annotation
-from models import Book, Chapter
+from book.views import home, annotation
+from book.models import Book, Chapter
 
 class ViewTest(TestCase):
     '页面测试'

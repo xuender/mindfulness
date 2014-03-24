@@ -18,3 +18,4 @@ class Follow(UserModel):
         verbose_name_plural = '关注'
         ordering = ['-create_at']
         unique_together = ('create_by', 'user')
+        app_label = 'book'
