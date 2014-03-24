@@ -11,14 +11,7 @@ from django.template import RequestContext
 from django.views.decorators.http import require_http_methods
 
 from common.models import Message
-from models import Book, Chapter, Star, Annotation
-
-def home(request):
-    '首页'
-    context_dict = {'books': Book.top()}
-    context = RequestContext(request, context_dict)
-    return render_to_response('home.html', context)
-
+from book.models import Book, Chapter, Star, Annotation
 
 def annotation(request):
     '显示标注弹出窗口'
@@ -27,21 +20,12 @@ def annotation(request):
         return render_to_response('annotation.html', context)
     return render_to_response('registration/login_modal.html', context)
 
-def logout_view(request):
-    '退出'
-    logout(request)
-    return redirect('/')
-
 def readValue(data, key, message, msg):
     '读取参数'
     if key not in data:
         message.ok = False
         message.msg = msg
     return data[key]
-
-def demo(request):
-    data = serializers.serialize('json', Book.objects.all())
-    return HttpResponse(data, mimetype='application/json')
 
 # 集成到book网址下的函数
 
@@ -160,4 +144,4 @@ def get_urls():
                 name='stargazers'),
             )
 
-urls = (get_urls(), 'book', 'book')
+book_urls = (get_urls(), 'book', 'book')
