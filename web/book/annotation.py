@@ -6,6 +6,11 @@ from chapter import Chapter
 import re
 import json
 
+STYLE = (
+        ('a', '注释'),
+        ('l', '单线'),
+        ('d', '双线'),
+        )
 class Annotation(UpdateModel):
     '批注'
     chapter=models.ForeignKey(Chapter,
@@ -21,11 +26,6 @@ class Annotation(UpdateModel):
     end=models.IntegerField(
             default=0,
             verbose_name='结束'
-            )
-    STYLE = (
-            ('a', '注释'),
-            ('l', '单线'),
-            ('d', '双线'),
             )
     style = models.CharField(
             max_length=1,

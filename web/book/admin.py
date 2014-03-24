@@ -1,7 +1,25 @@
 # -*- coding: UTF-8 -*-
 from django.contrib import admin
 from common import register, BaseAdmin
-from models import Book, Chapter, Star, Follow, Annotation
+from models import *
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
+
+admin.site.unregister(User)
+class EmployeeInline(admin.StackedInline):
+    model = Employee
+    can_delete = False
+    verbose_name_plural = '雇员信息'
+class UserProfileInline(admin.StackedInline):
+    model = UserProfile
+    can_delete = False
+    verbose_name_plural = '用户扩展信息'
+
+# Define a new User admin
+@register(User)
+class UserAdmin(UserAdmin):
+    inlines = (UserProfileInline, EmployeeInline, )
+#admin.site.register(User, UserAdmin)
 
 class StarInline(admin.TabularInline):
     model = Star
