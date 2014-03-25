@@ -111,6 +111,12 @@ def chapter(request, bid, cid):
         # TODO 书籍错误
         pass
     context_dict['chapter'] = c
+    if request.user.is_authenticated():
+        context_dict['lines'] = c.lines(request.user)
+        context_dict['anns'] = c.anns(request.user)
+    else:
+        context_dict['lines'] = []
+        context_dict['anns'] = []
     context = RequestContext(request, context_dict)
     return render_to_response('chapter.html', context)
 

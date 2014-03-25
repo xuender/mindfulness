@@ -7,3 +7,4 @@ from chapter import Chapter
 from star import Star
 from follow import Follow
 from annotation import Annotation
+from bast import Bast

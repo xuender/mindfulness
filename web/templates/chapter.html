@@ -1,4 +1,5 @@
 {% extends "book_base.html" %}
+{% load book_tags %}
 {% load staticfiles %}
 {% block title %}章节 {{ book }}{% endblock %}
 {% block init_js %}
@@ -52,20 +53,15 @@ var CHAPTER = {{ chapter.id }};
       <div id="c1" class="panel-collapse collapse in">
         <div class="panel-body">
           <ul class="nav nav-pills nav-stacked">
-            <li class="active">
-              <span class="badge pull-right">4</span>
-              <label>
-                <input type="checkbox"></input>
-                钟茂森
-              </label>
-            </li>
+            {% for b in chapter.book.basts.all %}
             <li>
-              <span class="badge pull-right">5</span>
+              <span class="badge pull-right">{{ chapter | ann_count: b.author }}</span>
               <label>
                 <input type="checkbox"></input>
-                徐晨阳
+                {{ b.author }}
               </label>
             </li>
+            {% endfor %}
           </ul>
         </div><!-- panel-body -->
       </div><!-- collapseOne -->
@@ -97,7 +93,7 @@ var CHAPTER = {{ chapter.id }};
       </div><!-- panel-title -->
       <div class="panel-body">
         <ul class="nav nav-pills nav-stacked">
-          {% for a in chapter.anns %}
+          {% for a in anns %}
           <li class="b1 ann"
             id="a{{ a.id }}" data="{{ a.toJson }}">
             <button class="pull-right btn btn-danger btn-xs">
@@ -111,7 +107,7 @@ var CHAPTER = {{ chapter.id }};
     </div><!-- panel -->
   </div><!-- 4 -->
 </div><!-- row -->
-{% for a in chapter.lines %}
+{% for a in lines %}
 <span class="sul ng-hide" data="{{ a.toJson }}">
   {{ a.id }}
 </span>

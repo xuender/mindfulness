@@ -7,7 +7,7 @@
 #
 
 
-sudo pip install django-guardian
-sudo pip install django-userena
-sudo pip install easy-thumbnails
-sudo pip install html2text
+#sudo pip install django-guardian
+#sudo pip install django-userena
+#sudo pip install easy-thumbnails
+#sudo pip install html2text

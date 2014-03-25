@@ -22,12 +22,17 @@ class UserAdmin(UserAdmin):
 #admin.site.register(User, UserAdmin)
 
 class StarInline(admin.TabularInline):
+    readonly_fields = ('create_at', )
     model = Star
+
+class BastInline(admin.TabularInline):
+    readonly_fields = ('create_at', )
+    model = Bast
 
 @register(Book)
 class BookAdmin(BaseAdmin):
     '图书管理'
-    inlines = [StarInline,]
+    inlines = [StarInline, BastInline, ]
     search_fields = ['title']
     date_hierarchy = 'modify_at'
     #list_filter = ['query', 'num', ]

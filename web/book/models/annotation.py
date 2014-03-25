@@ -14,7 +14,7 @@ STYLE = (
 class Annotation(UpdateModel):
     '批注'
     chapter=models.ForeignKey(Chapter,
-            related_name='anotations',
+            related_name='annotations',
             verbose_name='章节'
             )
     row=models.IntegerField(

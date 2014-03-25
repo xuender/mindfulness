@@ -20,11 +20,15 @@ class Chapter(UpdateModel):
             verbose_name='正文',
             )
 
-    def anns(self):
-        return self.anotations.filter(style='a')
+    def anns(self, user):
+        return self.annotations.filter(style='a', create_by=user)
 
-    def lines(self):
-        return self.anotations.filter(~Q(style='a'))
+    def lines(self, user):
+        return self.annotations.filter(~Q(style='a'), create_by=user)
+
+    def ann_count(self, user):
+        '某用户的批注数量'
+        return self.annotations.filter(create_by=user).count()
 
 
     def __unicode__(self):
