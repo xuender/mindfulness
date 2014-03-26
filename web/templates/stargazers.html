@@ -1,15 +1,15 @@
 {% extends "book_base.html" %}
-{% block title %}关注的人{% endblock %}
+{% block title %}关注《{{ book }}》的人{% endblock %}
 {% block content %}
 <div class="row">
-<div class="col-xs-6 col-md-3">
 {% for s in stars %}
+<div class="col-xs-6 col-md-2">
 <a href="#" class="thumbnail">
 <h3>
-{{ s.create_by }}
+{{ s.create_by.first_name }}
 </h3>
 </a>
-{% endfor %}
 </div><!-- 6 -->
+{% endfor %}
 </div><!-- row -->
 {% endblock %}
