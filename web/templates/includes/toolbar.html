@@ -1,3 +1,4 @@
+{% load book_tags %}
 <div class="btn-toolbar pull-right" role="toolbar"
 ng-controller="ToolbarCtrl">
   <div class="btn-group">
@@ -23,7 +24,7 @@ ng-controller="ToolbarCtrl">
       批注
     </button>
     <button class="btn btn-success count">
-      {{ book.stars.count }}
+      {{ book | user_count }}
     </button>
   </div><!-- btn-group -->
 </div><!-- btn-toolbar -->

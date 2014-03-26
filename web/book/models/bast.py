@@ -23,7 +23,7 @@ class Bast(UserModel):
             related_name='basts'
             )
     def __unicode__(self):
-        return u'%s:%s'%(self.author, self.book)
+        return u'%s:%s'%(self.author.first_name, self.book)
 
     class Meta:
         verbose_name = '推荐'

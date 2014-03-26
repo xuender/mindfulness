@@ -52,7 +52,7 @@ class Annotation(UpdateModel):
     @staticmethod
     def annotate(obj):
         '增加批注'
-        if obj.chapter.anotations.filter(row=obj.row,
+        if obj.chapter.annotations.filter(row=obj.row,
                 start=obj.start, end=obj.end, style=obj.style).count() > 0:
             return '标注重复，请修改'
         obj.save()
@@ -72,7 +72,7 @@ class Annotation(UpdateModel):
         return ''.join(self._select()[self.start - 1 : self.end])
 
     def __unicode__(self):
-        return u'%s:%s:%d'%(self.chapter, self.create_by, self.id)
+        return u'%s:%s:%d'%(self.chapter, self.create_by.first_name, self.id)
 
     class Meta:
         verbose_name = '批注'

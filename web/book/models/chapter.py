@@ -30,7 +30,6 @@ class Chapter(UpdateModel):
         '某用户的批注数量'
         return self.annotations.filter(create_by=user).count()
 
-
     def __unicode__(self):
         return u'%s:%s'%(self.book, self.title)
 

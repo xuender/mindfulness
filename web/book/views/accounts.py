@@ -23,10 +23,11 @@ def register(request):
             username = form.cleaned_data["username"]
             email = form.cleaned_data["email"]
             password = form.cleaned_data["password"]
-            user = User.objects.create_user(username,email,password)
+            user = User.objects.create_user(email ,email,password)
+            user.first_name = username
             user.groups.add(getCG())
             user.save()
-            user = authenticate(username=username, password=password)
+            user = authenticate(username=email, password=password)
             login(request, user)
             return redirect('/')
     context_dict = {'form': RegisterForm()}

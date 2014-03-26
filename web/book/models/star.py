@@ -13,7 +13,7 @@ class Star(UserModel):
             )
 
     def __unicode__(self):
-        return u'%s:%s'%(self.book, self.create_by)
+        return u'%s:%s'%(self.book, self.create_by.first_name)
 
     class Meta:
         verbose_name = '星标'

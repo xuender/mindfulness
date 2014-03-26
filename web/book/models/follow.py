@@ -11,7 +11,7 @@ class Follow(UserModel):
             )
 
     def __unicode__(self):
-        return u'%s:%s'%(self.user, self.create_by)
+        return u'%s:%s'%(self.user.first_name, self.create_by.first_name)
 
     class Meta:
         verbose_name = '关注'
