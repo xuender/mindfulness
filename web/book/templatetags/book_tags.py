@@ -8,7 +8,7 @@
 from django import template
 register = template.Library()
 
-@register.simple_tag
+@register.filter(name='ann_count')
 def ann_count(chapter, user):
     '批注统计'
     return chapter.ann_count(user)

@@ -1,6 +1,6 @@
 {% extends "book_base.html" %}
-{% load book_tags %}
 {% load staticfiles %}
+{% load book_tags %}
 {% block title %}章节 {{ book }}{% endblock %}
 {% block init_js %}
 {{ block.super }}
@@ -55,7 +55,7 @@ var CHAPTER = {{ chapter.id }};
           <ul class="nav nav-pills nav-stacked">
             {% for b in chapter.book.basts.all %}
             <li>
-              <span class="badge pull-right">{{ chapter | ann_count: b.author }}</span>
+              <span class="badge pull-right">{{ chapter | ann_count:b.author  }}</span>
               <label>
                 <input type="checkbox"></input>
                 {{ b.author }}
