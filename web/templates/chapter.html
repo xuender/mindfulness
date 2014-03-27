@@ -40,6 +40,64 @@ var CHAPTER = {{ chapter.id }};
       {% endcomment %}
       <p ng-mouseup="popup()" context>{{ chapter.context }}</p>
     </div>
+    <ul class="pager">
+      {% if chapter.pages.first %}
+      <li>
+        <a href="/book/{{ book.id }}/{{ chapter.pages.first.id }}">
+          首页:
+          {{ chapter.pages.first.title }}
+        </a>
+      </li>
+      {% else %}
+      <li class="disabled">
+        <a href="">
+          首页
+        </a>
+      </li>
+      {% endif %}
+      {% if chapter.pages.previous %}
+      <li>
+        <a href="/book/{{ book.id }}/{{ chapter.pages.previous.id }}">
+          上页:
+          {{ chapter.pages.previous.title }}
+        </a>
+      </li>
+      {% else %}
+      <li class="disabled">
+        <a href="">
+          上页
+        </a>
+      </li>
+      {% endif %}
+      {% if chapter.pages.next %}
+      <li>
+        <a href="/book/{{ book.id }}/{{ chapter.pages.next.id }}">
+          下页:
+          {{ chapter.pages.next.title }}
+        </a>
+      </li>
+      {% else %}
+      <li class="disabled">
+        <a href="">
+          下页
+        </a>
+      </li>
+      {% endif %}
+      {% if chapter.pages.end %}
+      <li>
+        <a href="/book/{{ book.id }}/{{ chapter.pages.end.id }}">
+          尾页:
+          {{ chapter.pages.end.title }}
+        </a>
+      </li>
+      {% else %}
+      <li class="disabled">
+        <a href="">
+          尾页
+        </a>
+      </li>
+      {% endif %}
+    </ul>
   </div><!-- 8 -->
   <div class="panel-group col-xs-4" id="right">
     <div class="panel panel-default">
