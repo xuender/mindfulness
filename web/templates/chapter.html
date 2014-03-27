@@ -58,7 +58,7 @@ var CHAPTER = {{ chapter.id }};
               <span class="badge pull-right">{{ chapter | ann_count:b.author  }}</span>
               <label>
                 <input type="checkbox"></input>
-                {{ b.author }}
+                {{ b.author.first_name }}
               </label>
             </li>
             {% endfor %}
