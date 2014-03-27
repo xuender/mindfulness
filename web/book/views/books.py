@@ -36,6 +36,7 @@ def annotate(request, bid, cid):
     m = Message()
     a = Annotation()
     a.chapter = Chapter.objects.get(id=cid)
+    a.book = a.chapter.book
     data = json.loads(request.body)
     row = readValue(data, 'row', m, '行号错误')
     if not m.ok:

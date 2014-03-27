@@ -3,6 +3,7 @@ from django.db import models
 from common.models import UpdateModel, UserModel
 from django.contrib.auth.models import User
 from chapter import Chapter
+from book import Book
 import re
 import json
 
@@ -13,6 +14,10 @@ STYLE = (
         )
 class Annotation(UpdateModel):
     '批注'
+    book = models.ForeignKey(Book,
+            related_name='annotations',
+            verbose_name='书籍'
+            )
     chapter=models.ForeignKey(Chapter,
             related_name='annotations',
             verbose_name='章节'

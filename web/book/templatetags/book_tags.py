@@ -15,7 +15,10 @@ def ann_count(chapter, user):
     return chapter.ann_count(user)
 
 @register.filter(name='user_count')
-def user_count(book):
+def user_count(book, chapter=None):
     '批注用户数量统计'
-    qs = Annotation.objects.filter(chapter__in = book.chapters.all())
+    if chapter:
+        qs = Annotation.objects.filter(book = book, chapter = chapter)
+    else:
+        qs = Annotation.objects.filter(book = book)
     return qs.order_by('create_by').distinct('create_by').count()
