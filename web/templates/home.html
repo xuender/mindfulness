@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load book_tags %}
 {% block title %}首页{% endblock %}
 {% block content %}
 <h1>书籍</h1>
 <ol>
   {% for book in books %}
   <li>
-    <a href="/book/{{ book.id }}">{{ book.title }}</a>
+    <a href="/book/{{ book.id | toStr }}">{{ book.title }}</a>
     <span>
       {{ book.stars.count }}
       <span class="glyphicon glyphicon-star"></span>

@@ -1,0 +1,59 @@
+{% load book_tags %}
+<ul class="pager">
+  {% if chapter.pages.first %}
+  <li>
+    <a href="/book/{{ book.id | toStr }}/{{ chapter.pages.first.id | toStr }}">
+      首页:
+      {{ chapter.pages.first.title }}
+    </a>
+  </li>
+  {% else %}
+  <li class="disabled">
+    <a href="">
+      首页
+    </a>
+  </li>
+  {% endif %}
+  {% if chapter.pages.previous %}
+  <li>
+    <a href="/book/{{ book.id | toStr }}/{{ chapter.pages.previous.id | toStr }}">
+      上页:
+      {{ chapter.pages.previous.title }}
+    </a>
+  </li>
+  {% else %}
+  <li class="disabled">
+    <a href="">
+      上页
+    </a>
+  </li>
+  {% endif %}
+  {% if chapter.pages.next %}
+  <li>
+    <a href="/book/{{ book.id | toStr }}/{{ chapter.pages.next.id | toStr }}">
+      下页:
+      {{ chapter.pages.next.title }}
+    </a>
+  </li>
+  {% else %}
+  <li class="disabled">
+    <a href="">
+      下页
+    </a>
+  </li>
+  {% endif %}
+  {% if chapter.pages.end %}
+  <li>
+    <a href="/book/{{ book.id | toStr }}/{{ chapter.pages.end.id | toStr }}">
+      尾页:
+      {{ chapter.pages.end.title }}
+    </a>
+  </li>
+  {% else %}
+  <li class="disabled">
+    <a href="">
+      尾页
+    </a>
+  </li>
+  {% endif %}
+</ul>

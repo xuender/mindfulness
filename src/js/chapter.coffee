@@ -4,7 +4,6 @@ Copyright (C) 2014 ender xu <xuender@gmail.com>
 
 Distributed under terms of the MIT license.
 ###
-
 AnnotationCtrl = ($scope, $modalInstance)->
   $scope.ann = ''
   $scope.close = ->
@@ -43,7 +42,41 @@ ToolbarCtrl = ($scope, $http)->
 ToolbarCtrl.$inject = ['$scope', '$http']
 
 BookCtrl = ($scope, $modal, $http)->
+  $scope.showUserIds = []
+  $scope.anns = {}
+  $scope.getAnn = (userId, callback)->
+    #获取用户注解
+    if userId of $scope.anns
+      callback($scope.anns[userId])
+    else
+      url = "/user/#{userId}/#{BOOK}/#{CHAPTER}"
+      $http.post(url,
+        {
+        headers:
+          'X-CSRFToken': CSRF
+        }
+      ).success((data, status, headers, config)->
+        if data.ok
+          $scope.anns[userId] = data.data
+          callback(data.data)
+        else
+          alert(data.msg)
+      ).error((data, status, headers, config)->
+        console.error data
+      )
+  $scope.showAnn = (ann)->
+    # 显示注解
+  $scope.readAnn = (userId)->
+    # 读取注解
+    if userId in $scope.showUserIds
+      JU.removeArray($scope.showUserIds, userId)
+      console.debug 'hide xxxx=%d', userId
+    else
+      $scope.showUserIds.push(userId)
+      console.debug 'ann:%s', $scope.getAnn(userId)
+      console.debug 'show xxxx=%d', userId
   $scope.add = ->
+    # 增加注解
     $scope.menuOpen = false
     s = selectData()
     console.info(s)
@@ -100,11 +133,13 @@ BookCtrl = ($scope, $modal, $http)->
     else
       $scope.menuOpen = false
   $scope.emphasis = ->
+    # 重点
     $scope.line('l')
   $scope.incisive = ->
+    # 精辟
     $scope.line('d')
   $scope.line = (style)->
-    # 重点
+    # 画线
     s = selectData()
     url = "/book/#{BOOK}/#{CHAPTER}/annotate"
     $http.post(url,

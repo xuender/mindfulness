@@ -4,22 +4,22 @@
 {% block title %}章节 {{ book }}{% endblock %}
 {% block init_js %}
 {{ block.super }}
-var CHAPTER = {{ chapter.id }};
+var CHAPTER = '{{ chapter.id | toStr }}';
 {% endblock %}
 {% block content %}
 <div class="row" ng-controller="BookCtrl">
   <div class="col-xs-8">
     <div class="dropdown" ng-class="{open: menuOpen}"
-        ng-style="menuStyle">
+      ng-style="menuStyle">
       <ul class="dropdown-menu" role="menu">
         <li role="presentation">
-          <a role="menuitem" tabindex="-1" href=""
+          <a tabindex="-1" href="" role="menuitem"
             ng-click="emphasis()">
             重点
           </a>
         </li>
         <li role="presentation">
-          <a role="menuitem" tabindex="-1" href=""
+          <a tabindex="-1" href="" role="menuitem"
             ng-click="incisive()">
             精辟
           </a>
@@ -40,64 +40,7 @@ var CHAPTER = {{ chapter.id }};
       {% endcomment %}
       <p ng-mouseup="popup()" context>{{ chapter.context }}</p>
     </div>
-    <ul class="pager">
-      {% if chapter.pages.first %}
-      <li>
-        <a href="/book/{{ book.id }}/{{ chapter.pages.first.id }}">
-          首页:
-          {{ chapter.pages.first.title }}
-        </a>
-      </li>
-      {% else %}
-      <li class="disabled">
-        <a href="">
-          首页
-        </a>
-      </li>
-      {% endif %}
-      {% if chapter.pages.previous %}
-      <li>
-        <a href="/book/{{ book.id }}/{{ chapter.pages.previous.id }}">
-          上页:
-          {{ chapter.pages.previous.title }}
-        </a>
-      </li>
-      {% else %}
-      <li class="disabled">
-        <a href="">
-          上页
-        </a>
-      </li>
-      {% endif %}
-      {% if chapter.pages.next %}
-      <li>
-        <a href="/book/{{ book.id }}/{{ chapter.pages.next.id }}">
-          下页:
-          {{ chapter.pages.next.title }}
-        </a>
-      </li>
-      {% else %}
-      <li class="disabled">
-        <a href="">
-          下页
-        </a>
-      </li>
-      {% endif %}
-      {% if chapter.pages.end %}
-      <li>
-        <a href="/book/{{ book.id }}/{{ chapter.pages.end.id }}">
-          尾页:
-          {{ chapter.pages.end.title }}
-        </a>
-      </li>
-      {% else %}
-      <li class="disabled">
-        <a href="">
-          尾页
-        </a>
-      </li>
-      {% endif %}
-    </ul>
+    {% include 'includes/pager.html' %}
   </div><!-- 8 -->
   <div class="panel-group col-xs-4" id="right">
     <div class="panel panel-default">
@@ -113,9 +56,11 @@ var CHAPTER = {{ chapter.id }};
           <ul class="nav nav-pills nav-stacked">
             {% for b in chapter.book.basts.all %}
             <li>
-              <span class="badge pull-right">{{ chapter | ann_count:b.author  }}</span>
+              <span class="badge pull-right">
+                {{ chapter | ann_count:b.author  }}
+              </span>
               <label>
-                <input type="checkbox"></input>
+                <input type="checkbox" ng-click="readAnn({{ b.author.id }})"></input>
                 {{ b.author.first_name }}
               </label>
             </li>

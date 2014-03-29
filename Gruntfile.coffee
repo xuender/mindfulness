@@ -53,6 +53,16 @@ module.exports = (grunt)->
           expand: true
           filter: 'isFile'
         ]
+      utils:
+        files: [
+          cwd: 'bower_components/js-utils/js/'
+          src: [
+            'array.min.js'
+          ]
+          dest: 'web/static/js'
+          expand: true
+          filter: 'isFile'
+        ]
       jquery:
         files: [
           cwd: 'bower_components/jquery/'

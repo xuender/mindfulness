@@ -7,6 +7,7 @@
 # Distributed under terms of the MIT license.
 from django import template
 from book.models import Annotation
+from book.utils import toStr
 register = template.Library()
 
 @register.filter(name='ann_count')
@@ -22,3 +23,8 @@ def user_count(book, chapter=None):
     else:
         qs = Annotation.objects.filter(book = book)
     return qs.order_by('create_by').distinct('create_by').count()
+
+@register.filter(name='toStr')
+def to_str(num):
+    '数字装换成字符串'
+    return toStr(num)

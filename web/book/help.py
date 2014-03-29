@@ -7,7 +7,7 @@
 # Distributed under terms of the MIT license.
 
 """
-辅助方法
+辅助方法，多数是数据库统计或判断
 """
 from django.contrib.auth.models import Group
 def getCG():

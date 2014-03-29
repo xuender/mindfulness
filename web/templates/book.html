@@ -1,5 +1,6 @@
 {% extends "book_base.html" %}
 {% load staticfiles %}
+{% load book_tags %}
 {% block title %}书籍{% endblock %}
 {% block init_js %}
 var IS_STAR = {{ isStar|lower }};
@@ -11,7 +12,7 @@ var STAR_COUNT = {{ book.stars.count }};
 {% block content %}
 <ol>
   {% for chapter in book.chapters.all %}
-  <li><a href="/book/{{ book.id }}/{{ chapter.id }}">{{ chapter.title }}</a></li>
+  <li><a href="/book/{{ book.id | toStr }}/{{ chapter.id | toStr }}">{{ chapter.title }}</a></li>
   {% endfor %}
 </ol>
 {% endblock %}

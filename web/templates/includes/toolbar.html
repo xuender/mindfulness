@@ -3,16 +3,16 @@
 ng-controller="ToolbarCtrl">
   <div class="btn-group">
     <button class="btn btn-default" ng-disabled="disabled"
-    ng-click="stared(true, {{ book.id }})" ng-hide="isStar">
+    ng-click="stared(true, '{{ book.id | toStr }}')" ng-hide="isStar">
       <i class="glyphicon glyphicon-star-empty"></i>
       关注
     </button>
     <button class="btn btn-default active" ng-disabled="disabled"
-    ng-click="stared(false, {{ book.id }})" ng-show="isStar">
+    ng-click="stared(false, '{{ book.id | toStr }}')" ng-show="isStar">
       <i class="glyphicon glyphicon-star"></i>
       取消关注
     </button>
-    <a class="btn btn-success count" href="/book/{{ book.id }}/stargazers">
+    <a class="btn btn-success count" href="/book/{{ book.id | toStr }}/stargazers">
       {% verbatim %}
       {{ starCount }}
       {% endverbatim %}
@@ -30,7 +30,7 @@ ng-controller="ToolbarCtrl">
 </div><!-- btn-toolbar -->
 <h1>
   <i class="glyphicon glyphicon-book"></i>
-  <a href="/book/{{ book.id }}">
+  <a href="/book/{{ book.id | toStr }}">
     {{ book.title }}
   </a>
 </h1>

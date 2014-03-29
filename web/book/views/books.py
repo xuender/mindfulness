@@ -12,6 +12,7 @@ from django.views.decorators.http import require_http_methods
 
 from common.models import Message
 from book.models import Book, Chapter, Star, Annotation
+from book.utils import toNum
 
 def annotation(request):
     '显示标注弹出窗口'
@@ -70,7 +71,7 @@ def annotate(request, bid, cid):
 @require_http_methods(["POST"])
 def star(request, bid):
     '标星'
-    book = Book.objects.get(id=bid)
+    book = Book.objects.get(id = toNum(bid))
     if not book.isStar(request.user):
         s = Star()
         s.book = book
@@ -82,13 +83,14 @@ def star(request, bid):
 @require_http_methods(["POST"])
 def unstar(request, bid):
     '取消标星'
-    book = Book.objects.get(id=bid)
+    book = Book.objects.get(id = toNum(bid))
     if book.isStar(request.user):
         book.unstar(request.user)
     return HttpResponse(book.stars.count())
 
 def get_dict(request, bid):
     '基本字典'
+    bid = toNum(bid)
     book = Book.objects.get(id=bid)
     isStar = False
     if request.user.is_authenticated():
@@ -107,8 +109,8 @@ def book(request, bid):
 def chapter(request, bid, cid):
     '章节'
     context_dict = get_dict(request, bid)
-    c = Chapter.objects.get(id=cid)
-    if bid != c.book.id:
+    c = Chapter.objects.get(id = toNum(cid))
+    if toNum(bid) != c.book.id:
         # TODO 书籍错误
         pass
     context_dict['chapter'] = c
@@ -131,24 +133,24 @@ def stargazers(request, bid):
 
 def get_urls():
     return patterns('',
-            url(r'^(?P<bid>\d+)$',
+            url(r'^(?P<bid>\w+)$',
                 book,
                 name='book'),
-            url(r'^(?P<bid>\d+)/(?P<cid>\d+)$',
-                chapter,
-                name='chapter'),
-            url(r'^(?P<bid>\d+)/(?P<cid>\d+)/annotate$',
+            url(r'^(?P<bid>\w+)/(?P<cid>\w+)/annotate$',
                 annotate,
                 name='annotate'),
-            url(r'^(?P<bid>\d+)/star$',
+            url(r'^(?P<bid>\w+)/star$',
                 star,
                 name='star'),
-            url(r'^(?P<bid>\d+)/unstar$',
+            url(r'^(?P<bid>\w+)/unstar$',
                 unstar,
                 name='unstar'),
-            url(r'^(?P<bid>\d+)/stargazers$',
+            url(r'^(?P<bid>\w+)/stargazers$',
                 stargazers,
                 name='stargazers'),
+            url(r'^(?P<bid>\w+)/(?P<cid>\w+)$',
+                chapter,
+                name='chapter'),
             )
 
 book_urls = (get_urls(), 'book', 'book')
