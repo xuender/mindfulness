@@ -21,6 +21,8 @@ $ ->
   )
   showLine()
   # 显示所有下划线
+  showUnderLine()
+showUnderLine = ->
   $('.sul').each(->
     a = JSON.parse($(this).attr('data'))
     underline(
@@ -29,6 +31,7 @@ $ ->
       "ul_#{a.style}"
     )
   )
+
 
 angular.module('book', [
   'ui.bootstrap'

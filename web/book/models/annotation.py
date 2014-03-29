@@ -4,6 +4,7 @@ from common.models import UpdateModel, UserModel
 from django.contrib.auth.models import User
 from chapter import Chapter
 from book import Book
+from ..utils import toStr
 import re
 import json
 
@@ -43,16 +44,21 @@ class Annotation(UpdateModel):
             verbose_name='正文',
             )
 
+    def toDict(self):
+        '转换成字典'
+        return {
+                'id': toStr(self.id),
+                'user': toStr(self.create_by.id),
+                #'id': self.id,
+                'row': self.row,
+                'start': self.start,
+                'end': self.end,
+                'context': self.context,
+                'style': self.style
+                }
     def toJson(self):
         '转换成JSON字串'
-        return json.dumps({
-            'id': self.id,
-            'row': self.row,
-            'start': self.start,
-            'end': self.end,
-            'context': self.context,
-            'style': self.style
-            })
+        return json.dumps(self.toDict())
 
     @staticmethod
     def annotate(obj):

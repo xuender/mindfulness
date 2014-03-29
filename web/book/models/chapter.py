@@ -47,10 +47,16 @@ class Chapter(UpdateModel):
                 self.ps.next = cs[num + 1]
         return self.ps
 
+    def all(self, user):
+        '用户所有批注'
+        return self.annotations.filter(create_by=user)
+
     def anns(self, user):
+        '批注'
         return self.annotations.filter(style='a', create_by=user)
 
     def lines(self, user):
+        '画线'
         return self.annotations.filter(~Q(style='a'), create_by=user)
 
     def ann_count(self, user):

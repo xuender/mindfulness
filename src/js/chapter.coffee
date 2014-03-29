@@ -23,11 +23,9 @@ ToolbarCtrl = ($scope, $http)->
       url = "/book/#{id}/star"
     else
       url = "/book/#{id}/unstar"
-    $http(
-      method: 'POST'
+    $http.post(url, '',
       headers:
         'X-CSRFToken': CSRF
-      url: url
     ).success((data, status, headers, config)->
       $scope.isStar = b
       $scope.disabled = false
@@ -47,34 +45,39 @@ BookCtrl = ($scope, $modal, $http)->
   $scope.getAnn = (userId, callback)->
     #获取用户注解
     if userId of $scope.anns
-      callback($scope.anns[userId])
+      callback(userId)
     else
       url = "/user/#{userId}/#{BOOK}/#{CHAPTER}"
-      $http.post(url,
-        {
+      $http.post(url, '',
         headers:
           'X-CSRFToken': CSRF
-        }
       ).success((data, status, headers, config)->
         if data.ok
           $scope.anns[userId] = data.data
-          callback(data.data)
+          callback(userId)
         else
           alert(data.msg)
       ).error((data, status, headers, config)->
         console.error data
       )
-  $scope.showAnn = (ann)->
+  $scope.showAnn = (userId)->
     # 显示注解
+    $scope.showUserIds.push(userId)
+    for id in $scope.showUserIds
+      for a in $scope.anns[id]
+        # TODO 式样要修改，并需要可以删除
+        if a.style != 'a'
+          underline(
+            $("#s#{a.row}_#{a.start}"),
+            $("#s#{a.row}_#{a.end}"),
+            "ul_#{a.style}"
+          )
   $scope.readAnn = (userId)->
     # 读取注解
     if userId in $scope.showUserIds
       JU.removeArray($scope.showUserIds, userId)
-      console.debug 'hide xxxx=%d', userId
     else
-      $scope.showUserIds.push(userId)
-      console.debug 'ann:%s', $scope.getAnn(userId)
-      console.debug 'show xxxx=%d', userId
+      $scope.getAnn(userId, $scope.showAnn)
   $scope.add = ->
     # 增加注解
     $scope.menuOpen = false

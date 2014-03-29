@@ -36,7 +36,7 @@ def annotate(request, bid, cid):
     '增加备注'
     m = Message()
     a = Annotation()
-    a.chapter = Chapter.objects.get(id=cid)
+    a.chapter = Chapter.objects.get(id = toNum(cid))
     a.book = a.chapter.book
     data = json.loads(request.body)
     row = readValue(data, 'row', m, '行号错误')
