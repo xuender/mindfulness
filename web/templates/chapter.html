@@ -60,7 +60,8 @@ var CHAPTER = '{{ chapter.id | toStr }}';
                 {{ chapter | ann_count:b.author  }}
               </span>
               <label>
-                <input type="checkbox" ng-click="readAnn({{ b.author.id }})"></input>
+                <input type="checkbox" 
+                ng-click="readAnn('{{ b.author.id | toStr }}')"/>
                 {{ b.author.first_name }}
               </label>
             </li>
