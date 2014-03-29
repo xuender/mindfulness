@@ -1,10 +1,11 @@
 {% extends "book_base.html" %}
+{% load book_tags %}
 {% block title %}关注《{{ book }}》的人{% endblock %}
 {% block content %}
 <div class="row">
 {% for s in stars %}
 <div class="col-xs-6 col-md-2">
-<a href="#" class="thumbnail">
+  <a href="/user/{{ s.create_by.id | toStr }}" class="thumbnail">
 <h3>
 {{ s.create_by.first_name }}
 </h3>

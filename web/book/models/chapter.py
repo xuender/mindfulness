@@ -28,6 +28,7 @@ class Chapter(UpdateModel):
             verbose_name='正文',
             )
     ps = None
+
     def pages(self):
         '获取翻页信息'
         if self.ps == None:

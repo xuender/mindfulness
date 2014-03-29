@@ -82,6 +82,6 @@ class Annotation(UpdateModel):
     class Meta:
         verbose_name = '批注'
         verbose_name_plural = '批注'
-        ordering = ['row', 'start']
+        ordering = ['book', 'chapter', 'row', 'start']
         unique_together = ('create_by', 'chapter', 'row', 'start', 'end', 'style')
         app_label = 'book'
