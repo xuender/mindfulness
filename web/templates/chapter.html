@@ -102,6 +102,7 @@ var CHAPTER = '{{ chapter.id | toStr }}';
             <li class="userMe ann"
               id="a{{ a.id | toStr }}" data="{{ a.toJson }}">
               <button class="pull-right btn btn-danger btn-xs"
+                ng-click="delAnn('{{ a.book.id | toStr }}', '{{ a.chapter.id | toStr }}', '{{ a.id | toStr }}')"
                 ng-show="isEdit">
                 <i class="glyphicon glyphicon-trash"></i>
               </button>

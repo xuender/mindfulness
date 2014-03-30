@@ -32,6 +32,20 @@ def readValue(data, key, message, msg):
 
 @login_required
 @require_http_methods(["POST"])
+def del_ann(request, bid, cid, aid):
+    '删除备注'
+    #TODO 检查 bid和cid还有aid的关系
+    a = Annotation.objects.get(id = toNum(aid))
+    m = Message()
+    if a.create_by.id == request.user.id:
+        a.delete()
+        m.ok = True
+    else:
+        m.ok = False
+    return HttpResponse(m, mimetype='application/json')
+
+@login_required
+@require_http_methods(["POST"])
 def annotate(request, bid, cid):
     '增加备注'
     m = Message()
@@ -151,6 +165,9 @@ def get_urls():
             url(r'^(?P<bid>\w+)/(?P<cid>\w+)$',
                 chapter,
                 name='chapter'),
+            url(r'^(?P<bid>\w+)/(?P<cid>\w+)/(?P<aid>\w+)$',
+                del_ann,
+                name='del_ann'),
             )
 
 book_urls = (get_urls(), 'book', 'book')

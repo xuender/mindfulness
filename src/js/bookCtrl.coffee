@@ -13,6 +13,22 @@ BookCtrl = ($scope, $modal, $http)->
 BookCtrl.$inject = ['$scope', '$modal', '$http']
 ChapterCtrl = ($scope, $modal, $http)->
   $scope.anns = {}
+  $scope.delAnn = (bid, cid, aid)->
+    # 删除备注
+    url = "/book/#{bid}/#{cid}/#{aid}"
+    $http.post(url, '',
+      headers:
+        'X-CSRFToken': CSRF
+    ).success((data, status, headers, config)->
+        if data.ok
+          $("#a#{aid}").remove()
+          alert('批注删除成功')
+          showLine()
+        else
+          alert('批注删除失败')
+    ).error((data, status, headers, config)->
+      console.error data
+    )
   $scope.getAnn = (userId, callback)->
     #获取用户注解
     if userId of $scope.anns
