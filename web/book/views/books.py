@@ -63,7 +63,7 @@ def annotate(request, bid, cid):
         m.ok = False
         m.msg = ret
         return HttpResponse(m, mimetype='application/json')
-    m.data = ret
+    m.data = ret.toDict()
     m.ok = True
     return HttpResponse(m, mimetype='application/json')
 

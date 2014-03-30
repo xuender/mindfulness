@@ -65,18 +65,30 @@ BookCtrl = ($scope, $modal, $http)->
     $scope.showUserIds.push(userId)
     for id in $scope.showUserIds
       for a in $scope.anns[id]
-        # TODO 式样要修改，并需要可以删除
-        if a.style != 'a'
+        if a.style == 'a'
+          $("<li class='b1 ann user#{$scope.showUserIds.indexOf(userId)}' id='a#{a.id}' data='#{JSON.stringify(a)}'>#{ a.context }</li>").appendTo('#anns')
+          createAnnotation(
+            $("#s#{a.row}_#{a.start}"),
+            $("#s#{a.row}_#{a.end}"),
+            $("#a#{a.id}"),
+            "user#{$scope.showUserIds.indexOf(userId)}"
+          )
+        else
           underline(
             $("#s#{a.row}_#{a.start}"),
             $("#s#{a.row}_#{a.end}"),
-            "ul_#{a.style}"
+            ["ul_#{a.style}", "user#{$scope.showUserIds.indexOf(userId)}"]
           )
   $scope.readAnn = (userId)->
     # 读取注解
     if userId in $scope.showUserIds
+      css = "user#{$scope.showUserIds.indexOf(userId)}"
+      $(".jumbotron span").removeClass(css)
+      $('.' + css).remove()
+      $('.' + css + 'L').remove()
       JU.removeArray($scope.showUserIds, userId)
     else
+      #TODO 显示用户批注的数量需要控制，收费点
       $scope.getAnn(userId, $scope.showAnn)
   $scope.add = ->
     # 增加注解
@@ -109,7 +121,14 @@ BookCtrl = ($scope, $modal, $http)->
         }
       ).success((data, status, headers, config)->
         if data.ok
-          underline($("#s#{s.row}_#{s.start}"), $("#s#{s.row}_#{s.end}"), 'ul_' + style)
+          console.info data
+          $("<li class='ann' id='a#{data.data.id}' data='#{JSON.stringify(data.data)}'>#{ data.data.context }</li>").appendTo('#anns')
+          createAnnotation(
+            $("#s#{s.row}_#{s.start}"),
+            $("#s#{s.row}_#{s.end}"),
+            $("#a#{data.data.id}"),
+            'userMe'
+          )
           window.getSelection().removeAllRanges()
         else
           alert(data.msg)
@@ -158,7 +177,11 @@ BookCtrl = ($scope, $modal, $http)->
       }
     ).success((data, status, headers, config)->
       if data.ok
-        underline($("#s#{s.row}_#{s.start}"), $("#s#{s.row}_#{s.end}"), 'ul_' + style)
+        underline(
+          $("#s#{s.row}_#{s.start}"),
+          $("#s#{s.row}_#{s.end}"),
+          ['ul_' + style, 'userMe']
+        )
         window.getSelection().removeAllRanges()
       else
         alert(data.msg)

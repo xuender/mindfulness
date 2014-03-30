@@ -12,7 +12,8 @@ showLine = ->
     createAnnotation(
       $("#s#{a.row}_#{a.start}"),
       $("#s#{a.row}_#{a.end}"),
-      $("#a#{a.id}")
+      $("#a#{a.id}"),
+      'userMe'
     )
   )
 $ ->
@@ -28,7 +29,7 @@ showUnderLine = ->
     underline(
       $("#s#{a.row}_#{a.start}"),
       $("#s#{a.row}_#{a.end}"),
-      "ul_#{a.style}"
+      ["ul_#{a.style}", 'userMe']
     )
   )
 

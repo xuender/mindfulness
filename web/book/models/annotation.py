@@ -63,8 +63,12 @@ class Annotation(UpdateModel):
     @staticmethod
     def annotate(obj):
         '增加批注'
-        if obj.chapter.annotations.filter(row=obj.row,
-                start=obj.start, end=obj.end, style=obj.style).count() > 0:
+        if obj.chapter.annotations.filter(
+                create_by=obj.user,
+                row=obj.row,
+                start=obj.start,
+                end=obj.end,
+                style=obj.style).count() > 0:
             return '标注重复，请修改'
         obj.save()
         return obj

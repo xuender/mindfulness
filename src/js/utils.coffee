@@ -97,15 +97,16 @@ doSpan = (str, row)->
       html += "<span id=\"s#{row}_#{start}\">#{s}</span>"
   html
 
-createLine = (x1, y1, x2, y2, color='#000', stroke='1', zindex=1000)->
+createLine = (x1, y1, x2, y2, css, stroke='1', zindex=1000)->
   # 画线
   isIE = navigator.userAgent.indexOf("MSIE") > -1
   line = document.createElement('div')
   length = Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))
   line.classList.add('line')
+  line.classList.add(css)
   line.style.width = length + 'px'
   line.style.borderBottom = stroke + 'px solid'
-  line.style.borderColor = color
+  #line.style.borderColor = color
   line.style.position = 'absolute'
   line.style.zIndex = zindex
   if isIE
@@ -124,7 +125,7 @@ createLine = (x1, y1, x2, y2, color='#000', stroke='1', zindex=1000)->
 
 setColor = (s1, s2, color)->
   # 设置颜色区域
-  s1.css('background-color', color)
+  s1.addClass(color)
   if s1.attr('id') != s2.attr('id') and s1.next().attr('id')
       setColor(s1.next(), s2, color)
 
@@ -132,7 +133,11 @@ drawLine = (x1, y1, x2, y2, css)->
   # 画线
   isIE = navigator.userAgent.indexOf("MSIE") > -1
   line = document.createElement('div')
-  line.classList.add(css)
+  if Array.isArray(css)
+    for c in css
+      line.classList.add(c)
+  else
+    line.classList.add(css)
   length = Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2))
   line.style.width = length + 'px'
   if isIE
@@ -164,15 +169,23 @@ underline = (s1, s2, ul_css, start=null)->
       start = s1
     underline(s1.next(), s2, ul_css, start)
 
-createAnnotation = (s1, s2, annotation)->
+createAnnotation = (s1, s2, annotation, css)->
   # 批注连线
   y = s1.offset().top + s1.height() + 3
   x1 = s1.offset().left
   parent = s1.parents('.col-xs-8')
   x2 = parent.offset().left + parent.width()
-  bc = annotation.css('background-color')
-  setColor(s1, s2, bc)
-  createLine(x1, y, x2, y, bc, 2)
+  createLine(x1, y, x2, y, css+'L', 2)
   x3 = annotation.offset().left
   y3 = annotation.offset().top + 4
-  createLine(x2, y, x3, y3, bc, 2)
+  createLine(x2, y, x3, y3, css+'L', 2)
+  setColor(s1, s2, css)
+  items = $('.ann').get()
+  items.sort((a,b)->
+    ad = JSON.parse(a.getAttribute('data'))
+    bd = JSON.parse(b.getAttribute('data'))
+    (ad.row * 100 + ad.start) - (bd.row * 100 + bd.start)
+  )
+  anns = $('#anns')
+  for i in items
+    $(i).appendTo(anns)

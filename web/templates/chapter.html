@@ -96,9 +96,9 @@ var CHAPTER = '{{ chapter.id | toStr }}';
         </h4>
       </div><!-- panel-title -->
       <div class="panel-body">
-        <ul class="nav nav-pills nav-stacked">
+        <ul class="nav nav-pills nav-stacked" id="anns">
           {% for a in anns %}
-          <li class="b1 ann"
+          <li class="userMe ann"
             id="a{{ a.id | toStr }}" data="{{ a.toJson }}">
             <button class="pull-right btn btn-danger btn-xs">
               <i class="glyphicon glyphicon-trash"></i>
@@ -110,14 +110,11 @@ var CHAPTER = '{{ chapter.id | toStr }}';
       </div><!-- panel-body -->
     </div><!-- panel -->
   </div><!-- 4 -->
-<h1>sss</h1>
 {% verbatim %}
 <span ng-repeat="i in showUserIds">
-  {{ i }}
-  <span class="sul" data="{{ a }}" ng-repeat="a in anns[i]"></span>
+  <span class="sul ng-hide" data="{{ a }}" ng-repeat="a in anns[i]"></span>
 </span>
 {% endverbatim %}
-<h1>sss</h1>
 </div><!-- row -->
 {% for a in lines %}
 <span class="sul ng-hide" data="{{ a.toJson }}">
