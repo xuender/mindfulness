@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.views.decorators.http import require_http_methods
 
 from book.forms import RegisterForm
 from book.help import getCG
@@ -15,8 +16,10 @@ def logout_view(request):
     logout(request)
     return redirect('/')
 
+@require_http_methods(["POST", 'GET'])
 def register(request):
     '注册'
+    print '注册'
     if request.method=="POST":
         form=RegisterForm(request.POST.copy())
         if form.is_valid():

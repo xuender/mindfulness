@@ -7,9 +7,6 @@ var IS_STAR = {{ isStar|lower }};
 var STAR_COUNT = {{ book.stars.count }};
 var BOOK = '{{ book.id | toStr }}';
 {% endblock %}
-{% block js %}
-<script src="{% static "js/chapter.min.js" %}"></script>
-{% endblock %}
 {% block top %}
 {% include 'includes/toolbar.html' %}
 {% endblock %}

@@ -93,7 +93,8 @@ module.exports = (grunt)->
         files:
           'web/static/js/chapter.min.js': [
             'src/js/utils.coffee'
-            'src/js/chapter.coffee'
+            'src/js/bookCtrl.coffee'
+            'src/js/toolbarCtrl.coffee'
             'src/js/web.coffee'
           ]
     uglify:

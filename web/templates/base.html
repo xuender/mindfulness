@@ -8,7 +8,7 @@
     <link href="{% static "css/base.min.css" %}" rel="stylesheet" type="text/css"/>
     {% block css %}{% endblock %}
   </head>
-  <body>
+  <body ng-controller="BookCtrl">
     {% include 'includes/nav.html' %}
     <div class="container">
       {% block top %}{% endblock %}
@@ -27,6 +27,7 @@
     <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/ui-bootstrap-tpls.min.js" %}"></script>
     <script src="{% static "js/array.min.js" %}"></script>
+    <script src="{% static "js/chapter.min.js" %}"></script>
     {% block js %}{% endblock %}
   </body>
 </html>

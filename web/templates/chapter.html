@@ -7,8 +7,8 @@
 var CHAPTER = '{{ chapter.id | toStr }}';
 {% endblock %}
 {% block content %}
-<div class="row" ng-controller="BookCtrl">
-  <div class="col-xs-8">
+<div class="row" ng-controller="ChapterCtrl">
+  <div class="col-md-8 main">
     <div class="dropdown" ng-class="{open: menuOpen}"
       ng-style="menuStyle">
       <ul class="dropdown-menu" role="menu">
@@ -42,79 +42,82 @@ var CHAPTER = '{{ chapter.id | toStr }}';
     </div>
     {% include 'includes/pager.html' %}
   </div><!-- 8 -->
-  <div class="panel-group col-xs-4" id="right">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#right" href="#c1">
-            推荐
-          </a>
-        </h4>
-      </div><!-- panel-title -->
-      <div id="c1" class="panel-collapse collapse in">
+  <div class="col-md-4">
+    <div class="panel-group affix" style="width:360px" id="right">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#right" href="#c1">
+              推荐
+            </a>
+          </h4>
+        </div><!-- panel-title -->
+        <div id="c1" class="panel-collapse collapse in">
+          <div class="panel-body">
+            <ul class="nav nav-pills nav-stacked">
+              {% for b in chapter.book.basts.all %}
+              <li>
+                <span class="badge pull-right">
+                  {{ chapter | ann_count:b.author  }}
+                </span>
+                <label>
+                  <input type="checkbox" 
+                  ng-click="readAnn('{{ b.author.id | toStr }}')"/>
+                  {{ b.author.first_name }}
+                </label>
+              </li>
+              {% endfor %}
+            </ul>
+          </div><!-- panel-body -->
+        </div><!-- collapseOne -->
+      </div><!-- panel -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#right" href="#c2">
+              <i class="glyphicon glyphicon-star"></i>
+              关注
+            </a>
+          </h4>
+        </div><!-- panel-title -->
+        <div id="c2" class="panel-collapse collapse">
+          <div class="panel-body">
+            <ul>
+              <li>钟茂森</li>
+              <li>钟茂森</li>
+            </ul>
+          </div><!-- panel-body -->
+        </div><!-- collapseOne -->
+      </div><!-- panel -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <i class="glyphicon glyphicon-pencil"></i>
+            批注
+          </h4>
+        </div><!-- panel-title -->
         <div class="panel-body">
-          <ul class="nav nav-pills nav-stacked">
-            {% for b in chapter.book.basts.all %}
-            <li>
-              <span class="badge pull-right">
-                {{ chapter | ann_count:b.author  }}
-              </span>
-              <label>
-                <input type="checkbox" 
-                ng-click="readAnn('{{ b.author.id | toStr }}')"/>
-                {{ b.author.first_name }}
-              </label>
+          <ul class="nav nav-pills nav-stacked" id="anns">
+            {% for a in anns %}
+            <li class="userMe ann"
+              id="a{{ a.id | toStr }}" data="{{ a.toJson }}">
+              <button class="pull-right btn btn-danger btn-xs"
+                ng-show="isEdit">
+                <i class="glyphicon glyphicon-trash"></i>
+              </button>
+              {{ a.context }}
             </li>
             {% endfor %}
           </ul>
         </div><!-- panel-body -->
-      </div><!-- collapseOne -->
-    </div><!-- panel -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <a data-toggle="collapse" data-parent="#right" href="#c2">
-            <i class="glyphicon glyphicon-star"></i>
-            关注
-          </a>
-        </h4>
-      </div><!-- panel-title -->
-      <div id="c2" class="panel-collapse collapse">
-        <div class="panel-body">
-          <ul>
-            <li>钟茂森</li>
-            <li>钟茂森</li>
-          </ul>
-        </div><!-- panel-body -->
-      </div><!-- collapseOne -->
-    </div><!-- panel -->
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          <i class="glyphicon glyphicon-pencil"></i>
-          批注
-        </h4>
-      </div><!-- panel-title -->
-      <div class="panel-body">
-        <ul class="nav nav-pills nav-stacked" id="anns">
-          {% for a in anns %}
-          <li class="userMe ann"
-            id="a{{ a.id | toStr }}" data="{{ a.toJson }}">
-            <button class="pull-right btn btn-danger btn-xs">
-              <i class="glyphicon glyphicon-trash"></i>
-            </button>
-            {{ a.context }}
-          </li>
-          {% endfor %}
-        </ul>
-      </div><!-- panel-body -->
-    </div><!-- panel -->
+      </div><!-- panel -->
+    </div><!-- 4 -->
   </div><!-- 4 -->
-{% verbatim %}
-<span ng-repeat="i in showUserIds">
-  <span class="sul ng-hide" data="{{ a }}" ng-repeat="a in anns[i]"></span>
-</span>
-{% endverbatim %}
+  {% verbatim %}
+  <span ng-repeat="i in showUserIds">
+    <span class="sul ng-hide" data="{{ a }}" ng-repeat="a in anns[i]"></span>
+  </span>
+  {% endverbatim %}
 </div><!-- row -->
 {% for a in lines %}
 <span class="sul ng-hide" data="{{ a.toJson }}">

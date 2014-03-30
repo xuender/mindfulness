@@ -5,15 +5,20 @@ Copyright (C) 2014 ender xu <xuender@gmail.com>
 Distributed under terms of the MIT license.
 ###
 
+USER_IDS = []
 showLine = ->
   $('.line').remove()
   $('.ann').each(->
     a = JSON.parse($(this).attr('data'))
+    if a.user in USER_IDS
+      css = 'user' + USER_IDS.indexOf(a.user)
+    else
+      css = 'userMe'
     createAnnotation(
       $("#s#{a.row}_#{a.start}"),
       $("#s#{a.row}_#{a.end}"),
       $("#a#{a.id}"),
-      'userMe'
+      css
     )
   )
 $ ->

@@ -19,9 +19,15 @@ ng-controller="ToolbarCtrl">
     </a>
   </div><!-- btn-group -->
   <div class="btn-group">
-    <button class="btn btn-default">
+    <button class="btn btn-default"
+    ng-hide="$parent.isEdit" ng-model="$parent.isEdit" btn-checkbox>
       <i class="glyphicon glyphicon-pencil"></i>
-      批注
+      编辑批注
+    </button>
+    <button class="btn btn-default"
+    ng-show="$parent.isEdit" ng-model="$parent.isEdit" btn-checkbox>
+      <i class="glyphicon glyphicon-pencil"></i>
+      阅读批注
     </button>
     <button class="btn btn-success count">
       {{ book | user_count }}

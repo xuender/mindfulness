@@ -4,43 +4,14 @@ Copyright (C) 2014 ender xu <xuender@gmail.com>
 
 Distributed under terms of the MIT license.
 ###
-AnnotationCtrl = ($scope, $modalInstance)->
-  $scope.ann = ''
-  $scope.close = ->
-    $modalInstance.close('close')
-  $scope.save =(ann) ->
-    $modalInstance.close(ann)
-AnnotationCtrl.$inject = ['$scope', '$modalInstance']
-
-ToolbarCtrl = ($scope, $http)->
-  $scope.isStar = IS_STAR
-  $scope.disabled = false
-  $scope.starCount = STAR_COUNT
-  $scope.stared = (b, id)->
-    # 设置星标
-    $scope.disabled = true
-    if b
-      url = "/book/#{id}/star"
-    else
-      url = "/book/#{id}/unstar"
-    $http.post(url, '',
-      headers:
-        'X-CSRFToken': CSRF
-    ).success((data, status, headers, config)->
-      $scope.isStar = b
-      $scope.disabled = false
-      $scope.starCount = data
-    ).error((data, status, headers, config)->
-      if b
-        alert('关注失败，请检查网络')
-      else
-        alert('取消关注失败，请检查网络')
-      $scope.disabled = false
-    )
-ToolbarCtrl.$inject = ['$scope', '$http']
-
 BookCtrl = ($scope, $modal, $http)->
-  $scope.showUserIds = []
+  $scope.isEdit = false
+  $scope.$watch('isEdit', (n, o)->
+    console.info n
+  )
+
+BookCtrl.$inject = ['$scope', '$modal', '$http']
+ChapterCtrl = ($scope, $modal, $http)->
   $scope.anns = {}
   $scope.getAnn = (userId, callback)->
     #获取用户注解
@@ -62,31 +33,28 @@ BookCtrl = ($scope, $modal, $http)->
       )
   $scope.showAnn = (userId)->
     # 显示注解
-    $scope.showUserIds.push(userId)
-    for id in $scope.showUserIds
+    USER_IDS.push(userId)
+    for id in USER_IDS
       for a in $scope.anns[id]
         if a.style == 'a'
-          $("<li class='b1 ann user#{$scope.showUserIds.indexOf(userId)}' id='a#{a.id}' data='#{JSON.stringify(a)}'>#{ a.context }</li>").appendTo('#anns')
-          createAnnotation(
-            $("#s#{a.row}_#{a.start}"),
-            $("#s#{a.row}_#{a.end}"),
-            $("#a#{a.id}"),
-            "user#{$scope.showUserIds.indexOf(userId)}"
-          )
+          $("<li class='b1 ann user#{USER_IDS.indexOf(userId)}' id='a#{a.id}' data='#{JSON.stringify(a)}'>#{ a.context }</li>").appendTo('#anns')
         else
           underline(
             $("#s#{a.row}_#{a.start}"),
             $("#s#{a.row}_#{a.end}"),
-            ["ul_#{a.style}", "user#{$scope.showUserIds.indexOf(userId)}"]
+            ["ul_#{a.style}", "user#{USER_IDS.indexOf(userId)}"]
           )
+    sortAnns()
+    showLine()
   $scope.readAnn = (userId)->
     # 读取注解
-    if userId in $scope.showUserIds
-      css = "user#{$scope.showUserIds.indexOf(userId)}"
+    if userId in USER_IDS
+      css = "user#{USER_IDS.indexOf(userId)}"
       $(".jumbotron span").removeClass(css)
       $('.' + css).remove()
       $('.' + css + 'L').remove()
-      JU.removeArray($scope.showUserIds, userId)
+      JU.removeArray(USER_IDS, userId)
+      showLine()
     else
       #TODO 显示用户批注的数量需要控制，收费点
       $scope.getAnn(userId, $scope.showAnn)
@@ -94,7 +62,6 @@ BookCtrl = ($scope, $modal, $http)->
     # 增加注解
     $scope.menuOpen = false
     s = selectData()
-    console.info(s)
     m = $modal.open
       backdrop: true
       keyboard: true
@@ -102,7 +69,6 @@ BookCtrl = ($scope, $modal, $http)->
       templateUrl: '/annotation'
       controller: 'AnnotationCtrl'
     m.result.then((res)->
-      console.info(res)
       style = 'a'
       if 'close' == res
         return
@@ -121,14 +87,14 @@ BookCtrl = ($scope, $modal, $http)->
         }
       ).success((data, status, headers, config)->
         if data.ok
-          console.info data
-          $("<li class='ann' id='a#{data.data.id}' data='#{JSON.stringify(data.data)}'>#{ data.data.context }</li>").appendTo('#anns')
+          $("<li class='ann userMe' id='a#{data.data.id}' data='#{JSON.stringify(data.data)}'>#{ data.data.context }</li>").appendTo('#anns')
           createAnnotation(
             $("#s#{s.row}_#{s.start}"),
             $("#s#{s.row}_#{s.end}"),
             $("#a#{data.data.id}"),
             'userMe'
           )
+          sortAnns()
           window.getSelection().removeAllRanges()
         else
           alert(data.msg)
@@ -190,4 +156,4 @@ BookCtrl = ($scope, $modal, $http)->
     )
     $scope.menuOpen = false
 
-BookCtrl.$inject = ['$scope', '$modal', '$http']
+ChapterCtrl.$inject = ['$scope', '$modal', '$http']

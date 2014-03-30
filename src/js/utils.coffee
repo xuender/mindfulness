@@ -151,6 +151,7 @@ drawLine = (x1, y1, x2, y2, css)->
     line.style.top = y1 + 0.5*length*Math.sin(angle) + 'px'
     line.style.left = x1 - 0.5*length*(1 - Math.cos(angle)) + 'px'
     line.style.MozTransform = line.style.WebkitTransform = line.style.OTransform= 'rotate(' + angle + 'rad)'
+  #TODO 增加删除按钮$('<button class="pull-right btn btn-danger btn-xs ng-hide" ng-show="isEdit"><i class="glyphicon glyphicon-trash"></i></button>').appendTo(line)
   $('body').append(line)
   line
 
@@ -169,17 +170,8 @@ underline = (s1, s2, ul_css, start=null)->
       start = s1
     underline(s1.next(), s2, ul_css, start)
 
-createAnnotation = (s1, s2, annotation, css)->
-  # 批注连线
-  y = s1.offset().top + s1.height() + 3
-  x1 = s1.offset().left
-  parent = s1.parents('.col-xs-8')
-  x2 = parent.offset().left + parent.width()
-  createLine(x1, y, x2, y, css+'L', 2)
-  x3 = annotation.offset().left
-  y3 = annotation.offset().top + 4
-  createLine(x2, y, x3, y3, css+'L', 2)
-  setColor(s1, s2, css)
+sortAnns = ->
+  # 注释排序
   items = $('.ann').get()
   items.sort((a,b)->
     ad = JSON.parse(a.getAttribute('data'))
@@ -189,3 +181,14 @@ createAnnotation = (s1, s2, annotation, css)->
   anns = $('#anns')
   for i in items
     $(i).appendTo(anns)
+createAnnotation = (s1, s2, annotation, css)->
+  # 批注连线
+  y = s1.offset().top + s1.height() + 3
+  x1 = s1.offset().left
+  parent = s1.parents('.main')
+  x2 = parent.offset().left + parent.width()
+  createLine(x1, y, x2, y, css+'L', 2)
+  x3 = annotation.offset().left
+  y3 = annotation.offset().top + 4
+  createLine(x2, y, x3, y3, css+'L', 2)
+  setColor(s1, s2, css)
