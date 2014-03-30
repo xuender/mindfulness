@@ -11,6 +11,7 @@ BookCtrl = ($scope, $modal, $http)->
   )
 
 BookCtrl.$inject = ['$scope', '$modal', '$http']
+USERS = []
 ChapterCtrl = ($scope, $modal, $http)->
   $scope.anns = {}
   $scope.delAnn = (bid, cid, aid)->
@@ -40,6 +41,7 @@ ChapterCtrl = ($scope, $modal, $http)->
           'X-CSRFToken': CSRF
       ).success((data, status, headers, config)->
         if data.ok
+          USER_IDS.push(userId)
           $scope.anns[userId] = data.data
           callback(userId)
         else
@@ -49,31 +51,32 @@ ChapterCtrl = ($scope, $modal, $http)->
       )
   $scope.showAnn = (userId)->
     # 显示注解
-    USER_IDS.push(userId)
-    for id in USER_IDS
-      for a in $scope.anns[id]
-        if a.style == 'a'
-          $("<li class='b1 ann user#{USER_IDS.indexOf(userId)}' id='a#{a.id}' data='#{JSON.stringify(a)}'>#{ a.context }</li>").appendTo('#anns')
-        else
-          underline(
-            $("#s#{a.row}_#{a.start}"),
-            $("#s#{a.row}_#{a.end}"),
-            ["ul_#{a.style}", "user#{USER_IDS.indexOf(userId)}"]
-          )
+    for a in $scope.anns[userId]
+      if a.style == 'a'
+        $("<li class='b1 ann user#{USER_IDS.indexOf(userId)}' id='a#{a.id}' data='#{JSON.stringify(a)}'>#{ a.context }</li>").appendTo('#anns')
+      else
+        underline(
+          $("#s#{a.row}_#{a.start}"),
+          $("#s#{a.row}_#{a.end}"),
+          ["ul_#{a.style}", "user#{USER_IDS.indexOf(userId)}"]
+        )
     sortAnns()
     showLine()
   $scope.readAnn = (userId)->
     # 读取注解
-    if userId in USER_IDS
+    if userId in USERS
       css = "user#{USER_IDS.indexOf(userId)}"
-      $(".jumbotron span").removeClass(css)
+      console.info css
+      $('.jumbotron .' + css).removeClass(css)
       $('.' + css).remove()
       $('.' + css + 'L').remove()
-      JU.removeArray(USER_IDS, userId)
+      JU.removeArray(USERS, userId)
       showLine()
     else
       #TODO 显示用户批注的数量需要控制，收费点
+      USERS.push(userId)
       $scope.getAnn(userId, $scope.showAnn)
+    1
   $scope.add = ->
     # 增加注解
     $scope.menuOpen = false
