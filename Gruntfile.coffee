@@ -21,16 +21,6 @@ module.exports = (grunt)->
         part: 'patch'
       files: ['package.json', 'bower.json']
     copy:
-      #d3:
-      #  files: [
-      #    cwd: 'bower_components/d3/'
-      #    src: [
-      #      'd3.min.js'
-      #    ]
-      #    dest: 'web/static/js'
-      #    expand: true
-      #    filter: 'isFile'
-      #  ]
       angular:
         files: [
           cwd: 'bower_components/angular/'
@@ -39,7 +29,7 @@ module.exports = (grunt)->
             'angular.min.js'
             'angular.min.js.map'
           ]
-          dest: 'web/static/js'
+          dest: 'public/js'
           expand: true
           filter: 'isFile'
         ]
@@ -49,17 +39,7 @@ module.exports = (grunt)->
           src: [
             'ui-bootstrap-tpls.min.js'
           ]
-          dest: 'web/static/js'
-          expand: true
-          filter: 'isFile'
-        ]
-      utils:
-        files: [
-          cwd: 'bower_components/js-utils/js/'
-          src: [
-            'array.min.js'
-          ]
-          dest: 'web/static/js'
+          dest: 'public/js'
           expand: true
           filter: 'isFile'
         ]
@@ -70,7 +50,7 @@ module.exports = (grunt)->
             'jquery.min.js'
             'jquery.min.map'
           ]
-          dest: 'web/static/js'
+          dest: 'public/js'
           expand: true
           filter: 'isFile'
         ]
@@ -82,7 +62,7 @@ module.exports = (grunt)->
             'js/bootstrap.min.js'
             'fonts/*'
           ]
-          dest: 'web/static'
+          dest: 'public'
           expand: true
           filter: 'isFile'
         ]
@@ -91,58 +71,43 @@ module.exports = (grunt)->
         bare: true
       chapter:
         files:
-          'web/static/js/chapter.min.js': [
-            'src/js/utils.coffee'
-            'src/js/bookCtrl.coffee'
-            'src/js/toolbarCtrl.coffee'
-            'src/js/web.coffee'
+          'public/js/web.min.js': [
+            'js/web.coffee'
           ]
     uglify:
       main:
         files:
-          'dist/js/main.min.js': [
-            'dist/js/main.min.js'
-          ]
-      background:
-        files:
-          'dist/js/background.js': [
-            'dist/js/background.js'
+          'dist/js/web.min.js': [
+            'public/js/web.min.js'
           ]
     htmlmin:
       dist:
         options:
           removeComments: true,
           collapseWhitespace: true
-        files: {}
-        #  'web/static/annotation.html': 'src/annotation.html'
+        files:
+          'public/demo.html': 'demo.html'
     cssmin:
       toolbox:
         expand: true
-        cwd: 'src/css/'
+        cwd: 'css/'
         src: ['*.css', '!*.min.css'],
-        dest: 'web/static/css/',
+        dest: 'public/css/',
         ext: '.min.css'
-    shell:
-      runServer:
-        command: 'web/manage.py runserver --insecure'
-        options:
-          stdout: true
-          stdin: true
-          stderr: true
     watch:
       css:
         files: [
-          'src/**/*.css'
+          'css/*.css'
         ]
         tasks: ['cssmin']
       html:
         files: [
-          'src/*.html'
+          '*.html'
         ]
         tasks: ['htmlmin']
       coffee:
         files: [
-          'src/**/*.coffee'
+          'js/*.coffee'
         ]
         tasks: ['coffee']
     compress:
