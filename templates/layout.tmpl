@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN" ng-app="web" ng-csp>
+  <head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/web.min.css">
+    <title>{[{ .Title }]}正念阅读 老豆网</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="application-name" content="oldbean.cn">
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand hidden-sm" href="http://www.oldbean.cn">老豆网</a>
+        </div><!-- navbar-header -->
+        <div class="navbar-collapse collapse" role="navigation">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="/">首页</a>
+            </li>
+            <li ng-show="isLogin">
+              <a href="/clan#/tree">家谱</a>
+            </li>
+          </ul>
+          <ul ng-hide="isLogin" class="nav navbar-nav navbar-right">
+            <li>
+              <a href ng-click="showLogin()">注册</a>
+            </li>
+            <li>
+              <a href ng-click="showLogin()">登录</a>
+            </li>
+          </ul>
+          <ul ng-show="isLogin" class="nav navbar-nav navbar-right">
+            <li ng-show="isLogin && user.cs ">
+              <a href="/cs">客服</a>
+            </li>
+            <li>
+              <a href ng-click="post('question')">
+                <i class="fa fa-question-circle"></i>
+                问题
+              </a>
+            </li>
+            <li>
+              <a href ng-click="post('bug')">
+                <i class="fa fa-times-circle"></i>
+                错误 
+              </a>
+            </li>
+            <li>
+              <a href ng-click="post('feature')">
+                <i class="fa fa-heart"></i>
+                功能建议
+              </a>
+            </li>
+            <li class="dropdown" dropdown>
+              <a href="#" class="dropdown-toggle" dropdown-toggle>
+                {{ user.name }}
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href ng-click="password()">修改密码</a></li>
+                <li><a href ng-click="showLog()">操作日志</a></li>
+                <li class="divider"></li>
+                <li><a href ng-click="showLogin()">更换用户</a></li>
+                <li><a href="/logout" >退出</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- navbar-collapse -->
+      </div><!-- container -->
+    </div><!-- header -->
+    {[{ yield }]}
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-route.min.js"></script>
+    <script src="js/angular-locale_zh-cn.js"></script>
+    <script src="js/ui-bootstrap-tpls.min.js"></script>
+    <script src="js/web.min.js"></script>
+  </body>
+</html>

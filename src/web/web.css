@@ -1,0 +1,28 @@
+/*
+ * web.css
+ * Copyright (C) 2015 ender xu
+ *
+ * Distributed under terms of the MIT license.
+ */
+
+body {
+  padding-top: 30px;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "WenQuanYi Micro Hei", sans-serif;
+}
+@media (min-width: 768px) {
+  .navbar {
+    min-height: 40px
+  }
+  .navbar-nav>li>a {
+    font-size: 14px;
+    padding-top: 11px;
+    padding-bottom: 11px
+  }
+  .navbar-brand {
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 42px;
+    height: 42px
+  }
+}
+

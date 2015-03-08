@@ -3,7 +3,6 @@ module.exports = (grunt)->
   grunt.loadNpmTasks('grunt-contrib-uglify')
   grunt.loadNpmTasks('grunt-contrib-watch')
   grunt.loadNpmTasks('grunt-contrib-copy')
-  grunt.loadNpmTasks('grunt-karma')
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-coffeelint')
   grunt.loadNpmTasks('grunt-contrib-cssmin')
@@ -15,7 +14,7 @@ module.exports = (grunt)->
     pkg:
       grunt.file.readJSON('package.json')
     clean:
-      dist: ['dist']
+      dist: ['bin', 'pkg', 'public']
     bump:
       options:
         part: 'patch'
@@ -25,7 +24,6 @@ module.exports = (grunt)->
         files: [
           cwd: 'bower_components/angular/'
           src: [
-            'angular.js'
             'angular.min.js'
             'angular.min.js.map'
           ]
@@ -43,12 +41,33 @@ module.exports = (grunt)->
           expand: true
           filter: 'isFile'
         ]
+      angularI18n:
+        files: [
+          cwd: 'bower_components/angular-i18n/'
+          src: [
+            'angular-locale_zh-cn.js'
+          ]
+          dest: 'public/js'
+          expand: true
+          filter: 'isFile'
+        ]
+      angular_route:
+        files: [
+          cwd: 'bower_components/angular-route/'
+          src: [
+            'angular-route.js'
+            'angular-route.min.js'
+            'angular-route.min.js.map'
+          ]
+          dest: 'public/js'
+          expand: true
+          filter: 'isFile'
+        ]
       jquery:
         files: [
           cwd: 'bower_components/jquery/'
           src: [
             'jquery.min.js'
-            'jquery.min.map'
           ]
           dest: 'public/js'
           expand: true
@@ -66,19 +85,42 @@ module.exports = (grunt)->
           expand: true
           filter: 'isFile'
         ]
+      fontCss:
+        files: [
+          cwd: 'bower_components/font-awesome/css'
+          src: [
+            'font-awesome.min.css'
+          ]
+          dest: 'public/css'
+          expand: true
+          filter: 'isFile'
+        ]
+      font:
+        files: [
+          cwd: 'bower_components/font-awesome/fonts'
+          src: [
+            '*'
+          ]
+          dest: 'public/fonts'
+          expand: true
+          filter: 'isFile'
+        ]
     coffee:
       options:
         bare: true
       chapter:
         files:
+          'public/js/note.min.js': [
+            'src/note/note.coffee'
+          ]
           'public/js/web.min.js': [
-            'js/web.coffee'
+            'src/web/web.coffee'
           ]
     uglify:
       main:
         files:
-          'dist/js/web.min.js': [
-            'public/js/web.min.js'
+          'bin/js/note.min.js': [
+            'bin/js/note.min.js'
           ]
     htmlmin:
       dist:
@@ -86,45 +128,30 @@ module.exports = (grunt)->
           removeComments: true,
           collapseWhitespace: true
         files:
-          'public/demo.html': 'demo.html'
+          'public/note.html': 'src/note/note.html'
     cssmin:
-      toolbox:
+      web:
         expand: true
-        cwd: 'css/'
+        cwd: 'src/web/'
         src: ['*.css', '!*.min.css'],
         dest: 'public/css/',
         ext: '.min.css'
     watch:
       css:
         files: [
-          'css/*.css'
+          'src/**/*.css'
         ]
         tasks: ['cssmin']
       html:
         files: [
-          '*.html'
+          'src/**/*.html'
         ]
         tasks: ['htmlmin']
       coffee:
         files: [
-          'js/*.coffee'
+          'src/**/*.coffee'
         ]
         tasks: ['coffee']
-    compress:
-      google:
-        options:
-          archive: 'dist/toolbox.zip'
-        files: [
-          {expand: true, cwd: 'dist', src: '**/*', dest: '/'}
-        ]
-    karma:
-      options:
-        configFile: 'karma.conf.js'
-      dev:
-        colors: true,
-      travis:
-        singleRun: true
-        autoWatch: false
   )
   grunt.registerTask('test', ['karma'])
   grunt.registerTask('dev', [
@@ -136,8 +163,7 @@ module.exports = (grunt)->
   ])
   grunt.registerTask('dist', [
     'dev'
-    'uglify'
-    'compress'
+    #'uglify'
   ])
   grunt.registerTask('deploy', [
     'bump'

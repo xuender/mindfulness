@@ -7,3 +7,4 @@ web/static/
 *.pyc
 *.log
 public/
+pkg/
