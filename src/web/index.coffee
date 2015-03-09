@@ -7,8 +7,8 @@ Distributed under terms of the MIT license.
 app = angular.module('web', [
   'ngRoute'
   'ui.bootstrap'
+  'hotkey'
   'LocalStorageModule'
   'ngTable'
   'highcharts-ng'
 ])
-

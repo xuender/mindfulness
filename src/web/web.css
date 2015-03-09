@@ -5,6 +5,23 @@
  * Distributed under terms of the MIT license.
  */
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
+.ng-cloak, .x-ng-cloak,
+.ng-hide {
+  display: none !important;
+}
+
+ng\:form {
+  display: block;
+}
+
+.nav, .pagination, .carousel, .panel-title a{
+cursor: pointer;
+}
+
+.ng-table {
+  border: 1px solid #ddd;
+}
 body {
   padding-top: 30px;
   font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "WenQuanYi Micro Hei", sans-serif;

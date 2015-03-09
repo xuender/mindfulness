@@ -105,6 +105,58 @@ module.exports = (grunt)->
           expand: true
           filter: 'isFile'
         ]
+      highcharts:
+        files: [
+          cwd: 'bower_components/highcharts/'
+          src: [
+            'highcharts-all.js'
+          ]
+          dest: 'public/js'
+          expand: true
+          filter: 'isFile'
+        ]
+      highchartsNg:
+        files: [
+          cwd: 'bower_components/highcharts-ng/dist/'
+          src: [
+            'highcharts-ng.min.js'
+          ]
+          dest: 'public/js'
+          expand: true
+          filter: 'isFile'
+        ]
+      ng_table_js:
+        files: [
+          cwd: 'bower_components/ng-table/'
+          src: [
+            'ng-table.js'
+            'ng-table.min.js'
+            'ng-table.map'
+          ]
+          dest: 'public/js'
+          expand: true
+          filter: 'isFile'
+        ]
+      ng_table_css:
+        files: [
+          cwd: 'bower_components/ng-table/'
+          src: [
+            'ng-table.min.css'
+          ]
+          dest: 'public/css'
+          expand: true
+          filter: 'isFile'
+        ]
+      storage:
+        files: [
+          cwd: 'bower_components/angular-local-storage/'
+          src: [
+            'angular-local-storage.min.js'
+          ]
+          dest: 'public/js'
+          expand: true
+          filter: 'isFile'
+        ]
     coffee:
       options:
         bare: true
@@ -114,6 +166,12 @@ module.exports = (grunt)->
             'src/note/note.coffee'
           ]
           'public/js/web.min.js': [
+            'src/web/postCtrl.coffee'
+            'src/web/loggerCtrl.coffee'
+            'src/web/loginCtrl.coffee'
+            'src/web/passwordCtrl.coffee'
+            'src/web/postCtrl.coffee'
+            'src/web/webCtrl.coffee'
             'src/web/web.coffee'
           ]
     uglify:
@@ -128,7 +186,15 @@ module.exports = (grunt)->
           removeComments: true,
           collapseWhitespace: true
         files:
-          'public/note.html': 'src/note/note.html'
+          'public/partials/confirm.html': 'src/web/confirm.html'
+          'public/partials/logger.html': 'src/web/logger.html'
+          'public/partials/login.html': 'src/web/login.html'
+          'public/partials/password.html': 'src/web/password.html'
+          'public/partials/post.html': 'src/web/post.html'
+          'public/partials/cs/count.html': 'src/web/cs/count.html'
+          'public/partials/cs/posts.html': 'src/web/cs/posts.html'
+          'public/partials/cs/session.html': 'src/web/cs/session.html'
+          'public/partials/cs/users.html': 'src/web/cs/users.html'
     cssmin:
       web:
         expand: true

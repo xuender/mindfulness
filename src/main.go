@@ -1,6 +1,7 @@
 package main
 
 import (
+	"base"
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/render"
 	"github.com/martini-contrib/sessions"
@@ -9,9 +10,14 @@ import (
 )
 
 func main() {
+	//base.LogInit("/tmp/a.log")
+	base.LogDev()
 	log.Println("网站启动...")
 	defer log.Println("网站关闭.")
-	//TODO 链接数据库
+	log.Println("连接数据库.")
+	base.DbOpen("127.0.0.1", "note")
+	defer base.DbClose()
+	log.Println("启动WEB服务.")
 	m := martini.Classic()
 	m.Use(render.Renderer(render.Options{
 		Layout: "layout",

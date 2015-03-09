@@ -6,9 +6,9 @@ import (
 )
 
 func TestSliceRemove(t *testing.T) {
-	Convey("Slice Remove", t, func() {
+	Convey("数组删除 SliceRemove", t, func() {
 		s := []string{"1", "2", "4", "5"}
-		Convey("remove", func() {
+		Convey("删除成功", func() {
 			SliceRemove(&s, "4")
 			So(len(s), ShouldEqual, 3)
 			So(s[2], ShouldEqual, "5")
@@ -19,7 +19,7 @@ func TestSliceRemove(t *testing.T) {
 			So(len(s), ShouldEqual, 1)
 			So(s[0], ShouldEqual, "2")
 		})
-		Convey("remove error", func() {
+		Convey("删除异常", func() {
 			SliceRemove(&s, "533")
 			So(len(s), ShouldEqual, 4)
 			So(s[3], ShouldEqual, "5")

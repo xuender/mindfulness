@@ -3,15 +3,16 @@
   <head>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/ng-table.min.css">
     <link rel="stylesheet" href="css/web.min.css">
-    <title>{[{ .Title }]}正念阅读 老豆网</title>
+    <title>{[{ .Title }]}正念阅读</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="application-name" content="oldbean.cn">
   </head>
-  <body>
+  <body ng-controller="WebCtrl">
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -25,11 +26,8 @@
         </div><!-- navbar-header -->
         <div class="navbar-collapse collapse" role="navigation">
           <ul class="nav navbar-nav">
-            <li>
-              <a href="/">首页</a>
-            </li>
             <li ng-show="isLogin">
-              <a href="/clan#/tree">家谱</a>
+              <a href="#">收藏</a>
             </li>
           </ul>
           <ul ng-hide="isLogin" class="nav navbar-nav navbar-right">
@@ -63,16 +61,24 @@
               </a>
             </li>
             <li class="dropdown" dropdown>
-              <a href="#" class="dropdown-toggle" dropdown-toggle>
+              <a href class="dropdown-toggle" dropdown-toggle>
                 {{ user.name }}
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href ng-click="password()">修改密码</a></li>
-                <li><a href ng-click="showLog()">操作日志</a></li>
+                <li>
+                  <a href="#" ng-click="password()">修改密码</a>
+                </li>
+                <li>
+                  <a href ng-click="showLog()">操作日志</a>
+                </li>
                 <li class="divider"></li>
-                <li><a href ng-click="showLogin()">更换用户</a></li>
-                <li><a href="/logout" >退出</a></li>
+                <li>
+                  <a href ng-click="showLogin()">更换用户</a>
+                </li>
+                <li>
+                  <a href="/logout" >退出</a>
+                </li>
               </ul>
             </li>
           </ul>
@@ -80,12 +86,17 @@
       </div><!-- container -->
     </div><!-- header -->
     {[{ yield }]}
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    var CID = '{[{ .Cid }]}'
+    </script>
     <script src="js/angular.min.js"></script>
     <script src="js/angular-route.min.js"></script>
     <script src="js/angular-locale_zh-cn.js"></script>
     <script src="js/ui-bootstrap-tpls.min.js"></script>
+    <script src="js/ng-table.min.js"></script>
+    <script src="js/highcharts-all.js"></script>
+    <script src="js/highcharts-ng.min.js"></script>
+    <script src="js/angular-local-storage.min.js"></script>
     <script src="js/web.min.js"></script>
   </body>
 </html>

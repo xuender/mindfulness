@@ -1,37 +1,26 @@
 package base
 
 import (
+	. "github.com/smartystreets/goconvey/convey"
 	"testing"
 )
 
-func TestParamsSkip(t *testing.T) {
-	p := Params{
-		Page:  3,
-		Count: 100,
-	}
-	if p.Skip() != 200 {
-		t.Errorf("Skip错误")
-	}
-}
-func TestParamsLimit(t *testing.T) {
-	p := Params{
-		Page:  3,
-		Count: 100,
-	}
-	if p.Limit() != 100 {
-		t.Errorf("Limit错误")
-	}
-}
-func TestParamsSort(t *testing.T) {
-	p := Params{
-		Page:  3,
-		Count: 100,
-	}
-	if p.Sort("def") != "def" {
-		t.Errorf("def错误")
-	}
-	p.Sorting = []string{"ca"}
-	if p.Sort("def") != "ca" {
-		t.Errorf("sort错误")
-	}
+func TestParams(t *testing.T) {
+	Convey("分页 Params", t, func() {
+		p := Params{
+			Page:  3,
+			Count: 100,
+		}
+		Convey("起始 Skip", func() {
+			So(p.Skip(), ShouldEqual, 200)
+		})
+		Convey("限制 Limit", func() {
+			So(p.Limit(), ShouldEqual, 100)
+		})
+		Convey("排序 Sort", func() {
+			So(p.Sort("def"), ShouldEqual, "def")
+			p.Sorting = []string{"ca"}
+			So(p.Sort("def"), ShouldEqual, "ca")
+		})
+	})
 }
