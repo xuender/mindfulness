@@ -42,6 +42,9 @@
             <li ng-show="isLogin && user.cs ">
               <a href="/cs">客服</a>
             </li>
+            <li ng-show="isLogin && user.cs ">
+              <a href="/note">注释</a>
+            </li>
             <li>
               <a href ng-click="post('question')">
                 <i class="fa fa-question-circle"></i>
@@ -89,7 +92,7 @@
     <script type="text/javascript">
     var CID = '{[{ .Cid }]}'
     </script>
-    <script src="js/angular.min.js"></script>
+    <script src="js/angular.js"></script>
     <script src="js/angular-route.min.js"></script>
     <script src="js/angular-locale_zh-cn.js"></script>
     <script src="js/ui-bootstrap-tpls.min.js"></script>
@@ -98,5 +101,11 @@
     <script src="js/highcharts-ng.min.js"></script>
     <script src="js/angular-local-storage.min.js"></script>
     <script src="js/web.min.js"></script>
+{[{ if eq current "cs" }]}
+    <script src="js/cs.min.js"></script>
+{[{ end }]}
+{[{ if eq current "note" }]}
+    <script src="js/note.min.js"></script>
+{[{ end }]}
   </body>
 </html>

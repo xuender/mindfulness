@@ -1,0 +1,61 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+  书籍
+    <div class="btn-group pull-right">
+      <label class="btn btn-info" ng-model="new" btn-radio="false">
+        <i class="fa fa-history"></i>
+        查询书籍
+      </label>
+      <label class="btn btn-info" ng-model="new" btn-radio="true">
+        <i class="fa fa-file-o"></i>
+        新增书籍
+      </label>
+    </div><!-- btn-group -->
+  </h4>
+</div><!-- modal-header -->
+<div class="modal-body">
+  <div class="row">
+    <div collapse="new">
+      <table ng-table="tableParams" show-filter="true"
+      class="table table-hover table-condensed">
+        <tbody ng-repeat="d in $data">
+          <tr class="btn-link" ng-class="{'info': !d.read}" ng-click="read(d)">
+            <td data-title="'标题'" sortable="'title'" filter="{'title': 'text'}">
+              {{ d.title }}
+            </td>
+            <td data-title="'时间'" sortable="'ca'">
+              <small>{{ d.ca | date:"yyyy-MM-dd HH:mm:ss" }}</small>
+            </td>
+          </tr>
+          <tr ng-show="d.$edit">
+            <td colspan="2">
+              <pre>{{ d.content }}</pre>
+              <pre ng-show="d.rt">{{ d.rt}}</pre>
+            </td>
+            <td colspan="1" style="vertical-align: middle;">
+              <small ng-show="d.status>0">{{ d.ua | date:"yyyy-MM-dd HH:mm:ss" }}</small>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div><!-- 9 -->
+    <form name="postForm" collapse="!new">
+      <div class="form-group" 
+      ng-class="{'has-error': postForm.title.$error.required}">
+        <label class="control-label" for="i_title">标题</label>
+        <input ng-model="p.title" enter required name="title"
+        type="text" class="form-control" id="i_title" placeholder="输入标题"/>
+        <span class="help-block" ng-show="postForm.title.$error.required">不能为空</span>
+      </div><!-- form-group -->
+      <div class="form-group">
+        <label class="control-label" for="i_content">内容</label>
+        <textarea ng-model="p.content" name="content" rows="6"
+        class="form-control" id="i_content" placeholder="输入内容"></textarea>
+      </div><!-- form-group -->
+    </form>
+    <button class="btn btn-primary" ng-show="new" ng-click="ok()">
+      <i class="fa fa-paper-plane"></i>
+      发送
+    </button>
+  </div><!-- row -->
+</div><!-- modal-body -->

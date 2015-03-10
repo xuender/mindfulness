@@ -24,6 +24,7 @@ module.exports = (grunt)->
         files: [
           cwd: 'bower_components/angular/'
           src: [
+            'angular.js'
             'angular.min.js'
             'angular.min.js.map'
           ]
@@ -163,6 +164,7 @@ module.exports = (grunt)->
       chapter:
         files:
           'public/js/note.min.js': [
+            'src/note/bookCtrl.coffee'
             'src/note/note.coffee'
           ]
           'public/js/web.min.js': [
@@ -173,6 +175,13 @@ module.exports = (grunt)->
             'src/web/postCtrl.coffee'
             'src/web/webCtrl.coffee'
             'src/web/web.coffee'
+          ]
+          'public/js/cs.min.js': [
+            'src/web/cs/countCtrl.coffee'
+            'src/web/cs/usersCtrl.coffee'
+            'src/web/cs/sessionCtrl.coffee'
+            'src/web/cs/postsCtrl.coffee'
+            'src/web/cs/manager.coffee'
           ]
     uglify:
       main:
@@ -195,6 +204,7 @@ module.exports = (grunt)->
           'public/partials/cs/posts.html': 'src/web/cs/posts.html'
           'public/partials/cs/session.html': 'src/web/cs/session.html'
           'public/partials/cs/users.html': 'src/web/cs/users.html'
+          'public/partials/note/book.html': 'src/note/book.html'
     cssmin:
       web:
         expand: true

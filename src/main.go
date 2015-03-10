@@ -6,6 +6,7 @@ import (
 	"github.com/martini-contrib/render"
 	"github.com/martini-contrib/sessions"
 	"log"
+	"note"
 	"web"
 )
 
@@ -27,6 +28,10 @@ func main() {
 	m.Use(sessions.Sessions("f_session", store))
 	// 客户网址
 	web.Path(m, "/")
+	// 客服网址
+	web.CsPath(m, "/cs")
+	// 注解网址
+	note.Path(m, "/note")
 	m.NotFound(func(r render.Render) {
 		r.HTML(404, "404", nil)
 	})

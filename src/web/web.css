@@ -23,7 +23,7 @@ cursor: pointer;
   border: 1px solid #ddd;
 }
 body {
-  padding-top: 30px;
+  padding-top: 60px;
   font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "WenQuanYi Micro Hei", sans-serif;
 }
 @media (min-width: 768px) {

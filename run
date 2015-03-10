@@ -14,5 +14,6 @@ gofmt -w src
 go install web
 go install note
 go run src/main.go
+#go run src/t.go
 
 export GOPATH="$OLDGOPATH"
