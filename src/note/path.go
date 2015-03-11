@@ -1,7 +1,7 @@
 package note
 
 import (
-	//"base"
+	"base"
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/binding"
 	"github.com/martini-contrib/render"
@@ -16,7 +16,9 @@ func Path(m *martini.ClassicMartini, p string) {
 	// 书籍增加
 	m.Post(p+"/book", web.ManagerJson, binding.Bind(Book{}), BookNew)
 	// 查询用户反馈列表
-	//m.Post(p+"/books", ManagerJson, binding.Bind(base.Params{}), BookQuery)
+	m.Post(p+"/books", web.ManagerJson, binding.Bind(base.Params{}), BookQuery)
 	// 书籍修改
 	m.Put(p+"/book", web.ManagerJson, binding.Bind(Book{}), BookUpdate)
+	// 书籍删除
+	m.Delete(p+"/book/:id", web.ManagerJson, BookRemove)
 }

@@ -7,8 +7,8 @@ Distributed under terms of the MIT license.
 app.config(['$routeProvider', ($routeProvider)->
   $routeProvider.
     when('/book',
-      templateUrl: 'partials/note/book.html'
-      controller: 'BookCtrl'
+      templateUrl: 'partials/note/books.html?1.html'
+      controller: 'BooksCtrl'
     ).otherwise({
       redirectTo: '/book'
     })

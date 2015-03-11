@@ -165,6 +165,7 @@ module.exports = (grunt)->
         files:
           'public/js/note.min.js': [
             'src/note/bookCtrl.coffee'
+            'src/note/booksCtrl.coffee'
             'src/note/note.coffee'
           ]
           'public/js/web.min.js': [
@@ -204,6 +205,7 @@ module.exports = (grunt)->
           'public/partials/cs/posts.html': 'src/web/cs/posts.html'
           'public/partials/cs/session.html': 'src/web/cs/session.html'
           'public/partials/cs/users.html': 'src/web/cs/users.html'
+          'public/partials/note/books.html': 'src/note/books.html'
           'public/partials/note/book.html': 'src/note/book.html'
     cssmin:
       web:
