@@ -60,6 +60,20 @@ func (b *Book) Query(p base.Params) (books []Book, count int, err error) {
 	return
 }
 
+// 置顶的图书
+func BookTop(r render.Render) {
+	p := base.Params{
+		Page:    1,
+		Count:   12,
+		Sorting: []string{"-ca"},
+	}
+	b := Book{}
+	books, _, _ := b.Query(p)
+	homePage := web.PageNew("", false)
+	homePage.Data = books
+	r.HTML(200, "index", homePage)
+}
+
 // 新增书籍
 func BookNew(l web.Log, s web.Session, b Book, r render.Render) {
 	log.Printf("book title:%s\n", b.Title)

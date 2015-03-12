@@ -2,6 +2,7 @@ package base
 
 import (
 	"gopkg.in/mgo.v2/bson"
+	"log"
 )
 
 // 查询参数
@@ -62,6 +63,7 @@ func (p *Params) query(i interface{}, sort string, list interface{},
 	if err != nil {
 		return
 	}
+	log.Println("name:", o.Name, m, dbDB)
 	q := dbDB.C(o.Name).Find(m)
 	count, err = q.Count()
 	if err == nil && count > 0 {

@@ -9,10 +9,6 @@ import (
 
 // 网址设置
 func Path(m *martini.ClassicMartini, p string) {
-	// 首页
-	m.Get(p, func(r render.Render) {
-		r.HTML(200, "index", PageNew("", false))
-	})
 	// 手机、密码登录
 	m.Post(p+"login", binding.Bind(Captcha{}), CaptchaCheck,
 		UserLogin)

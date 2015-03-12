@@ -26,6 +26,8 @@ func main() {
 	}))
 	store := sessions.NewCookieStore([]byte("xuender@gmail.com"))
 	m.Use(sessions.Sessions("f_session", store))
+	// 首页
+	m.Get("/", note.BookTop)
 	// 客户网址
 	web.Path(m, "/")
 	// 客服网址

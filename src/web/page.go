@@ -12,6 +12,8 @@ type Page struct {
 	Cid string
 	// 是否是客服
 	Cs bool
+	// 数据
+	Data interface{}
 }
 
 // 新建页面对象
