@@ -16,7 +16,14 @@
       <label class="control-label" for="i_author">作者</label>
       <input ng-model="b.author" enter required name="author"
       type="text" class="form-control" id="i_author" placeholder="本书作者"/>
-      <span class="help-block" ng-show="postForm.title.$error.required">不能为空</span>
+    </div><!-- form-group -->
+    <div class="form-group">
+      <label class="control-label" for="i_status">状态</label>
+      <select class="form-control" name="status" id="i_status" required 
+      ng-model="b.status"
+      ng-options="k as v for (k, v) in status">
+        <option value="">-- 请选择 --</option>
+      </select>
     </div><!-- form-group -->
     <div class="form-group">
       <label class="control-label" for="i_summary">简介</label>

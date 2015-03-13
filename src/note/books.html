@@ -12,6 +12,11 @@ class="table table-hover table-condensed">
       <td data-title="'作者'" sortable="'author'" filter="{'author': 'text'}">
         {{ d.author }}
       </td>
+      <td data-title="'状态'" sortable="'status'"
+      filter="{'status': 'select'}"
+      filter-data="selectStatus()">
+        {{ status[d.status] }}
+      </td>
       <td data-title="'创建'" sortable="'ca'">
         <small>{{ d.ca | date:"yyyy-MM-dd HH:mm:ss" }}</small>
       </td>

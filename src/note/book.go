@@ -19,6 +19,8 @@ type Book struct {
 	Author string `bson:"author,omitempty" json:"author"`
 	//简介
 	Summary string `bson:"summary,omitempty" json:"summary"`
+	// 状态
+	Status string `bson:"status,omitempty" json:"status"`
 	// 注释数量
 	Size rune `bson:"size,omitempty" json:"size"`
 	// 创建时间
@@ -66,6 +68,7 @@ func BookTop(r render.Render) {
 		Page:    1,
 		Count:   12,
 		Sorting: []string{"-ca"},
+		Filter:  map[string]interface{}{"status": "publish"},
 	}
 	b := Book{}
 	books, _, _ := b.Query(p)

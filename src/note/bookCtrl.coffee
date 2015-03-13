@@ -4,10 +4,11 @@ Copyright (C) 2014 ender xu <xuender@gmail.com>
 
 Distributed under terms of the MIT license.
 ###
-BookCtrl = ($scope, $modalInstance, $log, book, del)->
+BookCtrl = ($scope, $modalInstance, $log, book, del, status)->
   # 书籍编辑
   $scope.b = book
   $scope.showDel = del
+  $scope.status = status
   $log.debug $scope.b
   $scope.del = ->
     $modalInstance.close($scope.b.id)
@@ -22,4 +23,5 @@ BookCtrl.$inject = [
   '$log'
   'book'
   'del'
+  'status'
 ]

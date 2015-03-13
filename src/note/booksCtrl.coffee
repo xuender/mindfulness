@@ -8,19 +8,34 @@ BooksCtrl = ($scope, $http, $log, $modal, ngTableParams, $filter, $q)->
   $scope.$parent.name = 'book'
   $scope.new = false
   $log.debug 'xxx'
+  $scope.status=
+    new: '新建'
+    publish: '发布'
+  $scope.selectStatus = ->
+    # 状态列表
+    def = $q.defer()
+    ret = []
+    for k of $scope.status
+      $log.debug k
+      ret.push(
+        id:k
+        title: $scope.status[k]
+      )
+    def.resolve(ret)
+    def
   $scope.new = ->
     $modal.open(
-      templateUrl: 'partials/note/book.html?5.html'
+      templateUrl: 'partials/note/book.html?8.html'
       controller: BookCtrl
       backdrop: 'static'
       size: 'lg'
       resolve:
         book: ->
-          title: '未命名'
-          author: '无名氏'
-          summary: '无'
+          publish: false
         del: ->
           false
+        status: ->
+          $scope.status
     ).result.then((b)->
       $http.post('/note/book', b).success((data)->
         if data.ok
@@ -33,7 +48,7 @@ BooksCtrl = ($scope, $http, $log, $modal, ngTableParams, $filter, $q)->
     )
   $scope.update = (book)->
     $modal.open(
-      templateUrl: 'partials/note/book.html?5.html'
+      templateUrl: 'partials/note/book.html?8.html'
       controller: BookCtrl
       backdrop: 'static'
       size: 'lg'
@@ -42,6 +57,8 @@ BooksCtrl = ($scope, $http, $log, $modal, ngTableParams, $filter, $q)->
           book
         del: ->
           true
+        status: ->
+          $scope.status
     ).result.then((b)->
       $log.debug b
       if angular.isString(b)

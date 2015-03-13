@@ -10,7 +10,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
   $stateProvider
     .state('book',
       url: '/book'
-      templateUrl: 'partials/note/books.html?1.html'
+      templateUrl: 'partials/note/books.html?2.html'
       controller: 'BooksCtrl'
     )
 ])
