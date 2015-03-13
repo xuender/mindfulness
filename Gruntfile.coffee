@@ -52,13 +52,11 @@ module.exports = (grunt)->
           expand: true
           filter: 'isFile'
         ]
-      angular_route:
+      ui_route:
         files: [
-          cwd: 'bower_components/angular-route/'
+          cwd: 'bower_components/ui-router/release/'
           src: [
-            'angular-route.js'
-            'angular-route.min.js'
-            'angular-route.min.js.map'
+            'angular-ui-router.min.js'
           ]
           dest: 'public/js'
           expand: true

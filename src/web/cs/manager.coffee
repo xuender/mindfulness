@@ -4,22 +4,26 @@ Copyright (C) 2014 ender xu <xuender@gmail.com>
 
 Distributed under terms of the MIT license.
 ###
-app.config(['$routeProvider', ($routeProvider)->
-  $routeProvider.
-    when('/count',
+app.config(['$stateProvider', '$urlRouterProvider',
+($stateProvider, $urlRouterProvider)->
+  $urlRouterProvider.otherwise("/count")
+  $stateProvider
+    .state('count',
+      url: '/count'
       templateUrl: 'partials/cs/count.html'
       controller: 'CountCtrl'
-    ).when('/users',
+    ).state('users',
+      url: '/users'
       templateUrl: 'partials/cs/users.html'
       controller: 'UsersCtrl'
-    ).when('/session',
+    ).state('session',
+      url: '/session'
       templateUrl: 'partials/cs/session.html'
       controller: 'SessionCtrl'
-    ).when('/post',
+    ).state('post',
+      url: '/post'
       templateUrl: 'partials/cs/posts.html'
       controller: 'PostsCtrl'
-    ).otherwise({
-      redirectTo: '/count'
-    })
+    )
 ])
 
