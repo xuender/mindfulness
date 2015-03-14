@@ -11,7 +11,12 @@ app.config(['$stateProvider', '$urlRouterProvider',
     .state('book',
       url: '/book'
       templateUrl: 'partials/note/books.html?2.html'
-      controller: 'BooksCtrl'
+      controller: BooksCtrl
+    )
+    .state('section',
+      url: '/section'
+      templateUrl: 'partials/note/sections.html?1.html'
+      controller: SectionsCtrl
     )
 ])
 

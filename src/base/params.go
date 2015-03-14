@@ -46,8 +46,13 @@ func (p *Params) query(i interface{}, sort string, list interface{},
 	for k, v := range p.Filter {
 		switch v.(type) {
 		case string:
-			if v.(string) != "" {
-				m[k] = bson.RegEx{Pattern: v.(string), Options: "i"}
+			str, _ := v.(string)
+			if str != "" {
+				if bson.IsObjectIdHex(str) {
+					m[k] = bson.ObjectIdHex(str)
+				} else {
+					m[k] = bson.RegEx{Pattern: v.(string), Options: "i"}
+				}
 			}
 		case int:
 			m[k] = v.(int)
@@ -63,7 +68,6 @@ func (p *Params) query(i interface{}, sort string, list interface{},
 	if err != nil {
 		return
 	}
-	log.Println("name:", o.Name, m, dbDB)
 	q := dbDB.C(o.Name).Find(m)
 	count, err = q.Count()
 	if err == nil && count > 0 {
@@ -75,6 +79,7 @@ func (p *Params) query(i interface{}, sort string, list interface{},
 // 查找条件
 func (p *Params) QueryM(i interface{}, sort string, list interface{},
 	in map[string]interface{}) (int, error) {
+	log.Println("QueryM sort:", sort)
 	m := bson.M{}
 	for k, v := range in {
 		m[k] = v

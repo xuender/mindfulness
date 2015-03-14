@@ -4,6 +4,10 @@
     ng-class="{'active':name == 'book'}">
       书籍
     </a>
+    <a ui-sref="section" class="list-group-item"
+    ng-class="{'active':name == 'section'}">
+      章节
+    </a>
   </div>
   <div ui-view class="col-xs-10"></div>
 </div><!-- container -->

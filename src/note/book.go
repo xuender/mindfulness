@@ -11,6 +11,13 @@ import (
 	"web"
 )
 
+const (
+	发布 = "publish"
+	编辑 = "edit"
+	新建 = "new"
+)
+
+// 书籍
 type Book struct {
 	Id bson.ObjectId `bson:"_id,omitempty" json:"id" table:"book"`
 	// 标题
@@ -44,13 +51,16 @@ func (p *Book) Remove() error {
 	return base.Remove(p)
 }
 
-// 创建帖子
+// 创建
 func (b *Book) New() error {
 	if b.Id.Valid() {
 		return errors.New("ID错误")
 	}
 	if b.Title == "" {
 		return errors.New("标题不能为空")
+	}
+	if b.Status == "" {
+		b.Status = 新建
 	}
 	return b.Save()
 }
@@ -68,7 +78,7 @@ func BookTop(r render.Render) {
 		Page:    1,
 		Count:   12,
 		Sorting: []string{"-ca"},
-		Filter:  map[string]interface{}{"status": "publish"},
+		Filter:  map[string]interface{}{"status": 发布},
 	}
 	b := Book{}
 	books, _, _ := b.Query(p)
@@ -77,9 +87,9 @@ func BookTop(r render.Render) {
 	r.HTML(200, "index", homePage)
 }
 
-// 新增书籍
+// 书籍新增
 func BookNew(l web.Log, s web.Session, b Book, r render.Render) {
-	log.Printf("book title:%s\n", b.Title)
+	log.Printf("书籍新增 title:%s\n", b.Title)
 	ret := web.Msg{}
 	err := b.New()
 	ret.Ok = err == nil
@@ -90,8 +100,9 @@ func BookNew(l web.Log, s web.Session, b Book, r render.Render) {
 	l.Log(b.Id, "书籍新增:"+b.Title)
 }
 
-// 修改书籍
+// 书籍修改
 func BookUpdate(l web.Log, b Book, r render.Render) {
+	log.Printf("书籍修改 title:%s\n", b.Title)
 	ret := web.Msg{}
 	err := b.Save()
 	ret.Ok = err == nil
@@ -102,13 +113,37 @@ func BookUpdate(l web.Log, b Book, r render.Render) {
 	l.Log(b.Id, "书籍修改:"+b.Title)
 }
 
-// 查询图书
+// 所有书籍列表
+func BookMap(r render.Render) {
+	b := Book{}
+	ret := web.Msg{}
+	p := base.Params{
+		Page:    1,
+		Count:   100,
+		Sorting: []string{"-ca"},
+	}
+	ls, count, err := b.Query(p)
+	m := make(map[string]string)
+	if err == nil && count > 0 {
+		for _, i := range ls {
+			m[i.Id.Hex()] = i.Title
+		}
+	}
+	ret.Ok = err == nil
+	if ret.Ok {
+		ret.Data = base.Selecter4Map(m)
+	} else {
+		ret.Err = err.Error()
+	}
+	r.JSON(200, ret)
+}
+
+// 书籍查询
 func BookQuery(params base.Params, r render.Render) {
 	b := Book{}
 	ret := web.Msg{}
-	log.Printf("%s\n", params)
 	ls, count, err := b.Query(params)
-	log.Printf("count:%d\n", count)
+	log.Printf("书籍查询 params:%s, count:%d\n", params, count)
 	ret.Ok = err == nil
 	if err == nil {
 		ret.Count = count

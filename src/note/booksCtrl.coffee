@@ -6,7 +6,6 @@ Distributed under terms of the MIT license.
 ###
 BooksCtrl = ($scope, $http, $log, $modal, ngTableParams, $filter, $q)->
   $scope.$parent.name = 'book'
-  $scope.new = false
   $log.debug 'xxx'
   $scope.status=
     new: '新建'

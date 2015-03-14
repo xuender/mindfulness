@@ -164,6 +164,8 @@ module.exports = (grunt)->
           'public/js/note.min.js': [
             'src/note/bookCtrl.coffee'
             'src/note/booksCtrl.coffee'
+            'src/note/sectionCtrl.coffee'
+            'src/note/sectionsCtrl.coffee'
             'src/note/note.coffee'
           ]
           'public/js/web.min.js': [
@@ -205,6 +207,8 @@ module.exports = (grunt)->
           'public/partials/cs/users.html': 'src/web/cs/users.html'
           'public/partials/note/books.html': 'src/note/books.html'
           'public/partials/note/book.html': 'src/note/book.html'
+          'public/partials/note/sections.html': 'src/note/sections.html'
+          'public/partials/note/section.html': 'src/note/section.html'
     cssmin:
       web:
         expand: true

@@ -6,6 +6,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 	"log"
 	"reflect"
+	"strings"
 	"time"
 )
 
@@ -60,6 +61,8 @@ type Obj struct {
 	Ua bool
 	// 包含删除时间
 	Ra bool
+	// bson.ObjectsId字段
+	Ids []string
 }
 
 // 保存
@@ -157,11 +160,26 @@ func findObj(i interface{}) (obj Obj, err error) {
 		_, ca := it.FieldByName("Ca")
 		_, ua := it.FieldByName("Ua")
 		_, ra := it.FieldByName("Ra")
+		ids := []string{}
+		for i := 0; i < it.NumField(); i++ {
+			s := it.Field(i)
+			if s.Type.Name() == "ObjectId" {
+				name := s.Tag.Get("bson")
+				if name == "" {
+					name = s.Name
+				} else {
+					name = strings.Split(name, ",")[0]
+				}
+				ids = append(ids, name)
+			}
+		}
+		//log.Println(ids)
 		obj = Obj{
 			Name: field.Tag.Get("table"),
 			Ca:   ca,
 			Ua:   ua,
 			Ra:   ra,
+			Ids:  ids,
 		}
 		objMap[it] = obj
 	}
@@ -207,6 +225,16 @@ func Count(i interface{}, m bson.M) int {
 // 查询
 func Query(i interface{}, r interface{}, m bson.M, fields ...string) error {
 	obj, err := findObj(i)
+	for k, v := range m {
+		for _, id := range obj.Ids {
+			if k == id {
+				str, ok := v.(string)
+				if ok {
+					m[k] = bson.ObjectIdHex(str)
+				}
+			}
+		}
+	}
 	if err == nil {
 		err = obj.Query(r, m, fields...)
 	}

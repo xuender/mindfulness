@@ -1,0 +1,48 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+    章节
+  </h4>
+</div><!-- modal-header -->
+<div class="modal-body">
+  <form name="postForm">
+    <div class="form-group" 
+    ng-class="{'has-error': postForm.book.$error.required}">
+      <label class="control-label" for="i_book">书籍</label>
+      <select class="form-control" id="i_book" name="book"
+      ng-model="s.book" ng-options="m.id as m.title for m in books">
+      </select>
+      <span class="help-block" ng-show="postForm.book.$error.required">不能为空</span>
+    </div><!-- form-group -->
+    <div class="form-group" 
+    ng-class="{'has-error': postForm.title.$error.required}">
+      <label class="control-label" for="i_title">标题</label>
+      <input ng-model="s.title" enter required name="title"
+      type="text" class="form-control" id="i_title" placeholder="章节标题"/>
+      <span class="help-block" ng-show="postForm.title.$error.required">不能为空</span>
+    </div><!-- form-group -->
+    <div class="form-group">
+      <label class="control-label" for="i_order">顺序</label>
+      <input ng-model="s.order" enter required name="order"
+      type="number" class="form-control" id="i_order" placeholder="章节阅读顺序"/>
+    </div><!-- form-group -->
+    <div class="form-group">
+      <label class="control-label" for="i_content">内容</label>
+      <textarea ng-model="s.content" name="content" rows="6"
+      class="form-control" id="i_content" placeholder="章节内容"></textarea>
+    </div><!-- form-group -->
+  </form>
+</div><!-- modal-body -->
+<div class="modal-footer">
+  <button class="btn btn-danger" ng-show="showDel" ng-click="del()">
+    <i class="fa fa-paper-plane"></i>
+    删除
+  </button>
+  <button class="btn btn-primary" ng-click="ok()">
+    <i class="fa fa-paper-plane"></i>
+    确定
+  </button>
+  <button class="btn btn-warning" ng-click="cancel()">
+    <i class="fa fa-times"></i>
+    关闭
+  </button>
+</div><!-- modal-footer -->

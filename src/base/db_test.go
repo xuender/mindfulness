@@ -1,6 +1,7 @@
 package base
 
 import (
+	. "github.com/smartystreets/goconvey/convey"
 	"gopkg.in/mgo.v2/bson"
 	"testing"
 	"time"
@@ -12,6 +13,8 @@ type TestObj struct {
 	Title string `bson:"title" json:"title"`
 	// 名称
 	Name string `bson:"name" json:"name"`
+	// 测试ID
+	Tid bson.ObjectId `bson:"tid,omitempty" json:"tid"`
 	// 创建时间
 	Ca time.Time `bson:"ca,omitempty" json:"ca"`
 	// 创建时间
@@ -131,35 +134,57 @@ func TestRemove2(t *testing.T) {
 func TestQuery(t *testing.T) {
 	DbTest()
 	defer DbClose()
-	o := TestObj{
-		Title: "123",
-		Name:  "1",
-	}
-	Save(&o)
-	o1 := TestObj{
-		Title: "123",
-		Name:  "2",
-	}
-	Save(&o1)
-	o2 := TestObj{
-		Title: "1",
-		Name:  "3",
-	}
-	Save(&o2)
-	var r []TestObj
-	m := bson.M{
-		"title": "123",
-	}
-	Query(&o, &r, m)
-	if len(r) != 2 {
-		t.Errorf("查询错误")
-	}
-	Query(&o, &r, m, "name")
-	if r[0].Name != "1" {
-		t.Errorf("排序错误1")
-	}
-	Query(&o, &r, m, "-name")
-	if r[0].Name != "2" {
-		t.Errorf("排序错误2")
-	}
+	Convey("数据排序 Query", t, func() {
+		o := TestObj{
+			Title: "123",
+			Name:  "1",
+		}
+		Save(&o)
+		o1 := TestObj{
+			Title: "123",
+			Name:  "2",
+		}
+		Save(&o1)
+		tid := bson.NewObjectId()
+		o2 := TestObj{
+			Title: "1",
+			Name:  "3",
+			Tid:   tid,
+		}
+		Save(&o2)
+		Convey("查询", func() {
+			var r []TestObj
+			m := bson.M{
+				"title": "123",
+			}
+			Convey("排序", func() {
+				Query(&o, &r, m)
+				So(len(r), ShouldEqual, 2)
+			})
+			Convey("排序 name", func() {
+				Query(&o, &r, m, "name")
+				So(r[0].Name, ShouldEqual, "1")
+			})
+			Convey("排序 -name", func() {
+				Query(&o, &r, m, "-name")
+				So(r[0].Name, ShouldEqual, "2")
+			})
+		})
+		Convey("查询ID", func() {
+			var r []TestObj
+			m := bson.M{
+				"tid": tid.Hex(),
+			}
+			Query(&o, &r, m)
+			So(len(r), ShouldEqual, 1)
+		})
+		Convey("查询ObjectId", func() {
+			var r []TestObj
+			m := bson.M{
+				"tid": tid,
+			}
+			Query(&o, &r, m)
+			So(len(r), ShouldEqual, 1)
+		})
+	})
 }

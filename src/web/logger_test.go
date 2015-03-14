@@ -2,6 +2,7 @@ package web
 
 import (
 	"base"
+	. "github.com/smartystreets/goconvey/convey"
 	"gopkg.in/mgo.v2/bson"
 	"testing"
 )
@@ -10,55 +11,54 @@ import (
 func TestLogQuery(t *testing.T) {
 	base.DbTest()
 	defer base.DbClose()
-	uid := bson.NewObjectId()
-	n := Log{
-		Uid:  uid,
-		Work: "测试",
-	}
-	n.New()
-	n = Log{
-		Uid:  uid,
-		Work: "测试",
-	}
-	n.New()
-	l := Log{}
-	p := base.Params{
-		Page:  1,
-		Count: 100,
-	}
-	ls, count, err := l.Query(p)
-	if err == nil {
-		t.Errorf("缺失条件")
-	}
-	l.Uid = uid
-	ls, count, err = l.Query(p)
-	if err != nil {
-		t.Errorf("查询成功")
-	}
-	if len(ls) != 2 {
-		t.Errorf("查询数量错误:%d", len(ls))
-	}
-	if count != 2 {
-		t.Errorf("count错误:%d", count)
-	}
-	p.Page = 2
-	p.Count = 1
-	ls, count, err = l.Query(p)
-	if count != 2 {
-		t.Errorf("count错误:%d", count)
-	}
-	if len(ls) != 1 {
-		t.Errorf("查询数量错误:%d", len(ls))
-	}
-	p.Page = 1
-	p.Count = 1
-	ls, count, err = l.Query(p)
-	if count != 2 {
-		t.Errorf("count错误:%d", count)
-	}
-	if len(ls) != 1 {
-		t.Errorf("查询数量错误:%d", len(ls))
-	}
+	Convey("日志查询 log.Query", t, func() {
+		uid := bson.NewObjectId()
+		n := Log{
+			Uid:  uid,
+			Work: "测试",
+		}
+		n.New()
+		n = Log{
+			Uid:  uid,
+			Work: "测试",
+		}
+		n.New()
+		Convey("缺少条件", func() {
+			l := Log{}
+			p := base.Params{
+				Page:  1,
+				Count: 100,
+			}
+			_, _, err := l.Query(p)
+			So(err, ShouldNotBeNil)
+		})
+		Convey("查询成功", func() {
+			l := Log{}
+			l.Uid = uid
+			p := base.Params{
+				Page:  1,
+				Count: 100,
+			}
+			ls, count, err := l.Query(p)
+			So(err, ShouldBeNil)
+			So(len(ls), ShouldEqual, 2)
+			So(count, ShouldEqual, 2)
+			Convey("2页", func() {
+				p.Page = 2
+				p.Count = 1
+				ls, count, err = l.Query(p)
+				So(count, ShouldEqual, 2)
+				So(len(ls), ShouldEqual, 1)
+			})
+			Convey("1页", func() {
+				p.Page = 1
+				p.Count = 1
+				ls, count, err = l.Query(p)
+				So(count, ShouldEqual, 2)
+				So(len(ls), ShouldEqual, 1)
+			})
+		})
+	})
 }
 
 // 日志创建
