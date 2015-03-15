@@ -9,6 +9,7 @@ import (
 	"log"
 	"time"
 	"web"
+  "strings"
 )
 
 // 章节
@@ -54,11 +55,21 @@ func (s *Section) New() error {
 	if !s.Book.Valid() {
 		return errors.New("所属书籍不能为空")
 	}
-	return s.Update()
+  if strings.TrimSpace(s.Content) == ""{
+    return errors.New("章节内容不能为空")
+  }
+  err := s.Update()
+  if err == nil {
+    return s.CreateParts()
+  }
+	return err
 }
 
 // 修改
 func (s *Section) Update() error {
+  if s.Content == ""{
+    return errors.New("章节内容不能为空")
+  }
 	m := bson.M{
 		"book": s.Book,
 	}
@@ -98,6 +109,29 @@ func (s *Section) Update() error {
 	return s.Save()
 }
 
+// 创建段落
+func (o *Section) CreateParts() error {
+  if strings.TrimSpace(o.Content) == ""{
+    return errors.New("章节内容不能为空")
+  }
+	m := bson.M{
+		"section": o.Id,
+	}
+  if base.Count(new(Part), m) > 0 {
+    return errors.New("段落已经存在，请先删除")
+  }
+  for _, str := range strings.Split(o.Content, "\n") {
+    s := strings.TrimSpace(str)
+    if s != "" {
+      p := Part{
+        Section: o.Id,
+      }
+      p.SetSpan(s)
+      p.New()
+    }
+  }
+  return nil
+}
 // 查询
 func (s *Section) Query(p base.Params) (sections []Section, count int, err error) {
 	m := bson.M{}

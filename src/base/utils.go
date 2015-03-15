@@ -2,6 +2,7 @@ package base
 
 import (
 	"reflect"
+  "strings"
 )
 
 // 删除Slice元素
@@ -16,4 +17,29 @@ func SliceRemove(slice, element interface{}) {
 			return
 		}
 	}
+}
+
+// 字符串分割
+func SplitAfter(s string, sep []string) []string {
+  c := 0
+  for _, sp := range sep{
+    c += strings.Count(s, sp)
+  }
+  ret := []string{s}
+  if c == 0{
+    return ret
+  }
+  for _, sp := range sep{
+    n := []string{}
+    for _, r := range ret{
+      for _, a := range strings.SplitAfter(r, sp){
+        aa := strings.TrimSpace(a)
+        if aa != ""{
+          n = append(n, aa)
+        }
+      }
+    }
+    ret = n
+  }
+  return ret
 }
