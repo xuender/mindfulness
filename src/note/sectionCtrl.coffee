@@ -7,7 +7,7 @@ Distributed under terms of the MIT license.
 SectionCtrl = ($scope, $modalInstance, $log, section, del, books)->
   # 章节编辑
   $scope.s = section
-  $scope.showDel = del
+  $scope.old = del
   $scope.books = books
   $scope.del = ->
     $modalInstance.close($scope.s.id)

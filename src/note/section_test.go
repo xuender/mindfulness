@@ -83,13 +83,13 @@ func TestCreatePart(t *testing.T) {
 	base.DbTest()
 	defer base.DbClose()
 	Convey("章节创建", t, func() {
-			s := Section{}
-			s.Title = "title"
-			s.Book = bson.NewObjectId()
-      Convey("内容为空", func() {
-				So(s.CreateParts(), ShouldNotBeNil)
-        s.Content = " "
-				So(s.CreateParts(), ShouldNotBeNil)
-      })
-  })
+		s := Section{}
+		s.Title = "title"
+		s.Book = bson.NewObjectId()
+		Convey("内容为空", func() {
+			So(s.CreateParts(), ShouldNotBeNil)
+			s.Content = " "
+			So(s.CreateParts(), ShouldNotBeNil)
+		})
+	})
 }

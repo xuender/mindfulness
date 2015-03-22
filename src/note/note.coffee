@@ -18,5 +18,10 @@ app.config(['$stateProvider', '$urlRouterProvider',
       templateUrl: 'partials/note/sections.html?1.html'
       controller: SectionsCtrl
     )
+    .state('view',
+      url: '/view/:sid'
+      templateUrl: 'partials/note/section_view.html?1.html'
+      controller: SectionViewCtrl
+    )
 ])
 

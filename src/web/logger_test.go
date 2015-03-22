@@ -66,27 +66,27 @@ func TestLogNew(t *testing.T) {
 	base.DbTest()
 	defer base.DbClose()
 	Convey("日志新建 log.New", t, func() {
-    uid := bson.NewObjectId()
-    Convey("错误", func() {
-    n := Log{
-      Uid:  uid,
-      Work: "测试",
-    }
-      So(n.New(), ShouldBeNil)
-      So(n.Uid, ShouldEqual, uid)
-      So(n.New(), ShouldNotBeNil)
-    })
-    Convey("内容错误", func() {
-      n := Log{
-        Uid:  uid,
-      }
-      So(n.New(), ShouldNotBeNil)
-    })
-    Convey("用户错误", func() {
-      n := Log{
-        Work: "xxx",
-      }
-      So(n.New(), ShouldNotBeNil)
-    })
-  })
+		uid := bson.NewObjectId()
+		Convey("错误", func() {
+			n := Log{
+				Uid:  uid,
+				Work: "测试",
+			}
+			So(n.New(), ShouldBeNil)
+			So(n.Uid, ShouldEqual, uid)
+			So(n.New(), ShouldNotBeNil)
+		})
+		Convey("内容错误", func() {
+			n := Log{
+				Uid: uid,
+			}
+			So(n.New(), ShouldNotBeNil)
+		})
+		Convey("用户错误", func() {
+			n := Log{
+				Work: "xxx",
+			}
+			So(n.New(), ShouldNotBeNil)
+		})
+	})
 }

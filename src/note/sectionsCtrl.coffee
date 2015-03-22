@@ -27,7 +27,7 @@ SectionsCtrl = ($scope, $http, $log, $modal, ngTableParams, $filter, $q)->
     )
   $scope.new = ->
     $modal.open(
-      templateUrl: 'partials/note/section.html?2.html'
+      templateUrl: 'partials/note/section.html?4.html'
       controller: SectionCtrl
       backdrop: 'static'
       size: 'lg'
@@ -49,7 +49,7 @@ SectionsCtrl = ($scope, $http, $log, $modal, ngTableParams, $filter, $q)->
     )
   $scope.update = (s)->
     $modal.open(
-      templateUrl: 'partials/note/section.html?1.html'
+      templateUrl: 'partials/note/section.html?4.html'
       controller: SectionCtrl
       backdrop: 'static'
       size: 'lg'
